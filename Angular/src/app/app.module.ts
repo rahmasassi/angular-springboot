@@ -7,6 +7,7 @@ import { HeaderComponent } from './header/header.component';
 import { HomeComponent } from './home/home.component';
 import { FooterComponent } from './footer/footer.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
+import { ListReservationAgenceComponent } from './list-reservation-agence/list-reservation-agence.component';
 
 @NgModule({
   declarations: [
@@ -14,7 +15,8 @@ import { DashboardComponent } from './dashboard/dashboard.component';
     HeaderComponent,
     HomeComponent,
     FooterComponent,
-    DashboardComponent
+    DashboardComponent,
+    ListReservationAgenceComponent
   ],
   imports: [
     BrowserModule,
