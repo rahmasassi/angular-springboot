@@ -6,18 +6,26 @@ import { ListReservationAgenceComponent } from './list-reservation-agence/list-r
 
 const routes: Routes = [
   
-  { path: '', redirectTo: '/dashboard', pathMatch: 'full' },
   {
-    path: 'dashboard',
+    path: '',
     component: DashboardComponent,
     children: [
       { path: '', 
-      component: HomeComponent 
+      redirectTo: 'home',
+      pathMatch: 'full'
       },
+
      
      
+
+      {
+        path: 'home',
+        component: HomeComponent
+      }
+
     ],
-  }
+  }  
+  
 ];
 
 @NgModule({
