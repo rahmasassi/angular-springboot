@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { CarReservationClient } from '../Models/list-reservation-client.model';
+import { CarReservationClient } from '../../../Models/list-reservation-client.model';
 
 @Component({
   selector: 'app-list-reservation-client',

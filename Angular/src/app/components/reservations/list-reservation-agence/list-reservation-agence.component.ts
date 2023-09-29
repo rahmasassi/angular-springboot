@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { CarReservationAgence } from '../Models/list-reservation-agence.model';
+import { CarReservationAgence } from '../../../Models/list-reservation-agence.model';
 import { format } from 'date-fns';
 
 @Component({
