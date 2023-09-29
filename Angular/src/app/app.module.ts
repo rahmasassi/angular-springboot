@@ -3,40 +3,40 @@ import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { HeaderComponent } from './header/header.component';
-import { HomeComponent } from './home/home.component';
-import { FooterComponent } from './footer/footer.component';
-import { DashboardComponent } from './dashboard/dashboard.component';
-import { SingupUserComponent } from './singup-user/singup-user.component';
-import { LoginComponent } from './login/login.component';
+import { HeaderComponent } from './components/header/header.component';
+import { HomeComponent } from './components/home/home.component';
+import { FooterComponent } from './components/footer/footer.component';
+import { DashboardComponent } from './components/dashboard/dashboard.component';
+import { SingupUserComponent } from './components/singup-user/singup-user.component';
+import { LoginComponent } from './components/login/login.component';
 import { DetailCarComponent } from './components/cars/detail-car/detail-car.component';
-import { SingupAgencyComponent } from './singup-agency/singup-agency.component';
+import { SingupAgencyComponent } from './components/singup-agency/singup-agency.component';
 import { DetailReservationComponent } from './components/reservations/detail-reservation/detail-reservation.component';
-import { ConditionComponent } from './condition/condition.component';
+import { ConditionComponent } from './components/condition/condition.component';
 
-import { ListReservationAgenceComponent } from './list-reservation-agence/list-reservation-agence.component';
-import { ListReservationClientComponent } from './list-reservation-client/list-reservation-client.component';
-import { ListVoitureUserComponent } from './list-voiture-user/list-voiture-user.component';
-import { ListVoitureAgenceComponent } from './list-voiture-agence/list-voiture-agence.component';
+import { ListReservationAgenceComponent } from './components/reservations/list-reservation-agence/list-reservation-agence.component';
+import { ListReservationClientComponent } from './components/reservations/list-reservation-client/list-reservation-client.component';
+import { ListVoitureUserComponent } from './components/cars/list-voiture-user/list-voiture-user.component';
+import { ListVoitureAgenceComponent } from './components/cars/list-voiture-agence/list-voiture-agence.component';
 
-import { AddCarComponent } from './add-car/add-car.component';
-import { AddReclamationComponent } from './add-reclamation/add-reclamation.component';
-import { AddReservationComponent } from './add-reservation/add-reservation.component';
+import { AddCarComponent } from './components/cars/add-car/add-car.component';
+import { AddReclamationComponent } from './components/reclamation/add-reclamation/add-reclamation.component';
+import { AddReservationComponent } from './components/reservations/add-reservation/add-reservation.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatDatepickerModule } from '@angular/material/datepicker';
-import { CalendarComponent } from './calendar/calendar.component';
+import { CalendarComponent } from './components/calendar/calendar.component';
 import { MatNativeDateModule } from '@angular/material/core';
 
 
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { faSearch, faInfoCircle, faExclamationTriangle, faWarning } from '@fortawesome/free-solid-svg-icons';
-import { ButtonDetailsEditComponent } from './button-details-edit/button-details-edit.component';
-import { ButtonAddDeleteComponent } from './button-add-delete/button-add-delete.component';
-import { ListAgenceComponent } from './list-agence/list-agence.component';
-import { ListReclamationComponent } from './list-reclamation/list-reclamation.component';
-import { ListClientComponent } from './list-client/list-client.component';
+import { ButtonDetailsEditComponent } from './components/button-details-edit/button-details-edit.component';
+import { ButtonAddDeleteComponent } from './components/button-add-delete/button-add-delete.component';
+import { ListAgenceComponent } from './components/agency/list-agence/list-agence.component';
+import { ListReclamationComponent } from './components/reclamation/list-reclamation/list-reclamation.component';
+import { ListClientComponent } from './components/client/list-client/list-client.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -50,7 +50,7 @@ import { ListClientComponent } from './list-client/list-client.component';
     DetailCarComponent,
     SingupAgencyComponent,
     DetailReservationComponent,
-    ConditionComponent
+    ConditionComponent,
 
 
     ListReservationAgenceComponent,
@@ -61,7 +61,7 @@ import { ListClientComponent } from './list-client/list-client.component';
     ButtonAddDeleteComponent,
     ListAgenceComponent,
     ListReclamationComponent,
-    ListClientComponent
+    ListClientComponent,
 
     AddCarComponent,
     AddReclamationComponent,

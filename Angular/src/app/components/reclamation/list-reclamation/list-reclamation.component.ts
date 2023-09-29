@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { ListReclamation } from '../Models/reclamation';
+import { ListReclamation } from '../../../Models/reclamation';
 
 @Component({
   selector: 'app-list-reclamation',
