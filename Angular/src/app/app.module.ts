@@ -7,6 +7,12 @@ import { HeaderComponent } from './header/header.component';
 import { HomeComponent } from './home/home.component';
 import { FooterComponent } from './footer/footer.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
+import { SingupUserComponent } from './singup-user/singup-user.component';
+import { LoginComponent } from './login/login.component';
+import { DetailCarComponent } from './components/cars/detail-car/detail-car.component';
+import { SingupAgencyComponent } from './singup-agency/singup-agency.component';
+import { DetailReservationComponent } from './components/reservations/detail-reservation/detail-reservation.component';
+import { ConditionComponent } from './condition/condition.component';
 
 import { ListReservationAgenceComponent } from './list-reservation-agence/list-reservation-agence.component';
 import { ListReservationClientComponent } from './list-reservation-client/list-reservation-client.component';
@@ -39,6 +45,14 @@ import { ListClientComponent } from './list-client/list-client.component';
     FooterComponent,
     DashboardComponent,
 
+    SingupUserComponent,
+    LoginComponent,
+    DetailCarComponent,
+    SingupAgencyComponent,
+    DetailReservationComponent,
+    ConditionComponent
+
+
     ListReservationAgenceComponent,
     ListReservationClientComponent,
     ListVoitureUserComponent,
@@ -53,6 +67,7 @@ import { ListClientComponent } from './list-client/list-client.component';
     AddReclamationComponent,
     AddReservationComponent,
     CalendarComponent,
+
 
   ],
   imports: [
