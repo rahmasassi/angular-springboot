@@ -50,7 +50,7 @@ import { ListClientComponent } from './list-client/list-client.component';
     DetailCarComponent,
     SingupAgencyComponent,
     DetailReservationComponent,
-    ConditionComponent
+    ConditionComponent,
 
 
     ListReservationAgenceComponent,
@@ -61,7 +61,7 @@ import { ListClientComponent } from './list-client/list-client.component';
     ButtonAddDeleteComponent,
     ListAgenceComponent,
     ListReclamationComponent,
-    ListClientComponent
+    ListClientComponent,
 
     AddCarComponent,
     AddReclamationComponent,
