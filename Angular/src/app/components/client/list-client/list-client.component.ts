@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { ListClient } from '../../../Models/client';
+import { ListClient } from '../../../models/client';
 
 @Component({
   selector: 'app-list-client',
