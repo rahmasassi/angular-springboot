@@ -16,16 +16,11 @@ public class Cars {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
     private String model;
-    //private lob image;
+    private String imagePath;
     private int nb_doors;
     private int nb_places;
     private String address;
     private float price_per_day;
     private String registration_num;
     private String gearbox;
-
-    @OneToOne(mappedBy = "cars")
-    private Image image;
-
-
 }
