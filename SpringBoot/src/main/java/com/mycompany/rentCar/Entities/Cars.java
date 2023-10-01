@@ -1,20 +1,31 @@
 package com.mycompany.rentCar.Entities;
 
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
-import org.springframework.data.annotation.Id;
+import lombok.NoArgsConstructor;
 
-import java.time.LocalDate;
-import java.util.List;
+import javax.persistence.*;
 
-@Entity
 @Data
-@JsonIdentityInfo(property = "id",generator = ObjectIdGenerators.PropertyGenerator.class)
+@Entity
+@AllArgsConstructor
+@NoArgsConstructor
 public class Cars {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private long id;
+    private String model;
+    //private lob image;
+    private int nb_doors;
+    private int nb_places;
+    private String address;
+    private float price_per_day;
+    private String registration_num;
+    private String gearbox;
+
+    @OneToOne(mappedBy = "cars")
+    private Image image;
+
+
 }

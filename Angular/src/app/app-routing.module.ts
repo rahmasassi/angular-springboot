@@ -14,7 +14,7 @@ import { ListReservationClientComponent } from './components/reservations/list-r
 import { ListVoitureUserComponent } from './components/cars/list-voiture-user/list-voiture-user.component';
 import { ListVoitureAgenceComponent } from './components/cars/list-voiture-agence/list-voiture-agence.component';
 import { ListAgenceComponent } from './components/agency/list-agence/list-agence.component';
-import { ListReclamation } from './Models/reclamation';
+import { ListReclamation } from './models/reclamation';
 import { ListReclamationComponent } from './components/reclamation/list-reclamation/list-reclamation.component';
 import { ListClientComponent } from './components/client/list-client/list-client.component';
 
