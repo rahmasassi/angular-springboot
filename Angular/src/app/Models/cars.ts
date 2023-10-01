@@ -1,3 +1,6 @@
+import { Image } from "./image";
+
+
 export interface Cars {
     id: number;
     model?: string;
@@ -7,7 +10,7 @@ export interface Cars {
     price_per_day?: string;
     registration_num?: number;
     gearbox?: string;
-    image?: String;
+    image?: Image;
 
   }
 
