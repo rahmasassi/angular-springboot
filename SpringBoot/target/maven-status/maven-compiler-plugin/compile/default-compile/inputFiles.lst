@@ -1,3 +1,15 @@
+<<<<<<< HEAD
+C:\Users\Administrateur\projet-dev\angular-springboot\SpringBoot\src\main\java\com\mycompany\rentCar\Entities\Image.java
+C:\Users\Administrateur\projet-dev\angular-springboot\SpringBoot\src\main\java\com\mycompany\rentCar\Repositories\CarsRepository.java
+C:\Users\Administrateur\projet-dev\angular-springboot\SpringBoot\src\main\java\com\mycompany\rentCar\Entities\Cars.java
+C:\Users\Administrateur\projet-dev\angular-springboot\SpringBoot\src\main\java\com\mycompany\rentCar\Repositories\ImageRepository.java
+C:\Users\Administrateur\projet-dev\angular-springboot\SpringBoot\src\main\java\com\mycompany\rentCar\Services\ImageService.java
+C:\Users\Administrateur\projet-dev\angular-springboot\SpringBoot\src\main\java\com\mycompany\rentCar\Services\Impl\CarsServiceImpl.java
+C:\Users\Administrateur\projet-dev\angular-springboot\SpringBoot\src\main\java\com\mycompany\rentCar\Controllers\CarsController.java
+C:\Users\Administrateur\projet-dev\angular-springboot\SpringBoot\src\main\java\com\mycompany\rentCar\Services\CarsService.java
+C:\Users\Administrateur\projet-dev\angular-springboot\SpringBoot\src\main\java\com\mycompany\rentCar\Services\Impl\ImageServiceImp.java
+C:\Users\Administrateur\projet-dev\angular-springboot\SpringBoot\src\main\java\com\mycompany\rentCar\App.java
+=======
 C:\Users\Rahma\OneDrive\Bureau\angular-springboot\SpringBoot\src\main\java\com\mycompany\rentCar\App.java
 C:\Users\Rahma\OneDrive\Bureau\angular-springboot\SpringBoot\src\main\java\com\mycompany\rentCar\Entities\Image.java
 C:\Users\Rahma\OneDrive\Bureau\angular-springboot\SpringBoot\src\main\java\com\mycompany\rentCar\Repositories\ImageRepository.java
@@ -8,3 +20,4 @@ C:\Users\Rahma\OneDrive\Bureau\angular-springboot\SpringBoot\src\main\java\com\m
 C:\Users\Rahma\OneDrive\Bureau\angular-springboot\SpringBoot\src\main\java\com\mycompany\rentCar\Entities\Cars.java
 C:\Users\Rahma\OneDrive\Bureau\angular-springboot\SpringBoot\src\main\java\com\mycompany\rentCar\Services\CarsService.java
 C:\Users\Rahma\OneDrive\Bureau\angular-springboot\SpringBoot\src\main\java\com\mycompany\rentCar\Services\Impl\ImageServiceImp.java
+>>>>>>> 53d51eb9116caeca298cf60153d81584bf79484b
