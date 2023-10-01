@@ -1,5 +1,6 @@
 package com.mycompany.rentCar.Entities;
 
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -14,7 +15,7 @@ public class Cars {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
-    private String Model;
+    private String model;
     //private lob image;
     private int nb_doors;
     private int nb_places;
@@ -25,5 +26,6 @@ public class Cars {
 
     @OneToOne(mappedBy = "cars")
     private Image image;
+
 
 }

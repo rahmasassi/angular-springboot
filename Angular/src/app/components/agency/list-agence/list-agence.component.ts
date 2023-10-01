@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { ListAgence } from '../../../Models/list-agence.model';
+import { ListAgence } from '../../../models/list-agence.model';
 
 @Component({
   selector: 'app-list-agence',
