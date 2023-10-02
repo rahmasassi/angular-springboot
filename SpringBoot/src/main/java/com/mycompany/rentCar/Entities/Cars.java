@@ -23,5 +23,4 @@ public class Cars {
     @OneToOne(mappedBy = "cars")
     private Image image;
 
-
 }

@@ -37,6 +37,7 @@ import { ButtonAddDeleteComponent } from './components/button-add-delete/button-
 import { ListAgenceComponent } from './components/agency/list-agence/list-agence.component';
 import { ListReclamationComponent } from './components/reclamation/list-reclamation/list-reclamation.component';
 import { ListClientComponent } from './components/client/list-client/list-client.component';
+import { EditCarComponent } from './components/cars/edit-car/edit-car.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -67,6 +68,7 @@ import { ListClientComponent } from './components/client/list-client/list-client
     AddReclamationComponent,
     AddReservationComponent,
     CalendarComponent,
+    EditCarComponent,
 
 
   ],
