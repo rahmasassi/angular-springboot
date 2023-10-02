@@ -32,7 +32,7 @@ public class CarsController {
         try {
             // Ajoutez la voiture à la base de données en utilisant le service CarsService
             Cars savedCar = carsService.addCar(car);
-            // Ajoutez l'image à la voiture en utilisant le service ImageService
+            // Ajoutez l'imariege à la voiture en utilisant le service ImageService
             Image addedImage = imageService.addImage(file, savedCar.getId());
             // Vous pouvez retourner une réponse appropriée ici, par exemple, avec l'ID de la voiture
             return ResponseEntity.ok("Voiture ajoutée avec succès avec l'ID : " + savedCar.getId());
