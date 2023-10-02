@@ -52,4 +52,11 @@ public class CarsServiceImpl implements CarsService {
         }
         return carsRepository.save(existingCar);
     }
+     @Override
+    public List<CarDTO> getAllCars() {
+        List<Cars> allCars = (List<Cars>) carsRepository.findAll();
+        return allCars.stream()
+                .map(CarDTO::new)
+                .collect(Collectors.toList());
+    }
 }
