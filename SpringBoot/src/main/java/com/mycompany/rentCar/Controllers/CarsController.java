@@ -9,6 +9,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+
+import java.util.List;
+
 @CrossOrigin(origins = "http://localhost:4200")
 @RestController
 @RequestMapping("/api/cars")
@@ -40,5 +43,19 @@ public class CarsController {
         }
     }
 
+    @PutMapping("/update/{carId}")
+    public ResponseEntity<String> update(
+            @PathVariable Long carId,
+            @ModelAttribute Cars updatedCar,
+            @RequestParam("file") MultipartFile newImage
+    ) {
+        try {
+            Cars update = carsService.updatecar(carId, updatedCar, newImage);
+            return ResponseEntity.ok("Voiture mise à jour avec succès avec l'ID : " + update.getId());
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body("Erreur lors de la mise à jour de la voiture : " + e.getMessage());
+        }
+    }
 
 }
