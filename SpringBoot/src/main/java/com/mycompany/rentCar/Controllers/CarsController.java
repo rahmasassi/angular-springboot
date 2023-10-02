@@ -57,5 +57,21 @@ public class CarsController {
                     .body("Erreur lors de la mise à jour de la voiture : " + e.getMessage());
         }
     }
+     @GetMapping("/getAllCars")
+    public ResponseEntity<List<CarDTO>> getAllCars() {
+        try {
+            // Obtenez la liste des voitures avec leurs images
+            List<CarDTO> carsWithImages = carsService.getAllCars();
+            System.out.println("carsWithImages");
+
+            // Vous pouvez retourner une réponse appropriée ici
+            return ResponseEntity.ok(carsWithImages);
+        } catch (Exception e) {
+            // Gérez les erreurs ici
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body(null);
+        }
+    }
+
 
 }
