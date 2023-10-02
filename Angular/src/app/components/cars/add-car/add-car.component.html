@@ -14,25 +14,25 @@
     <div class="row">
       <div class="col-md-12 ftco-animate">
         <div class="comment-form-wrap pt-2">
-          <form action="#" class="p-5 bg-light">
+          <form action="#" class="p-5 bg-light" (ngSubmit)="onSubmit()" enctype="multipart/form-data">
             <div class="row">
               <div class="col-md-6">
                 <div class="form-group">
                   <label for="name">Agencie Name *</label>
-                  <input type="text" class="form-control" id="agencename">
+                  <input type="text" class="form-control" id="model" [(ngModel)]="car.model" name="model" required>
                 </div>
                 <div class="form-group">
                   <label for="nbdoor">Number of doors *</label>
-                  <input type="text" class="form-control" id="nbdoor" >
+                  <input type="text" class="form-control" id="nb_doors" [(ngModel)]="car.nb_doors" name="nb_doors" required >
                 </div>
                 <div class="form-group">
                   <label for="price">Price per day *</label>
-                  <input type="text" class="form-control" id="price" >
+                  <input type="text" class="form-control" id="price_per_day" [(ngModel)]="car.price_per_day" name="price_per_day" required>
                 </div>
                 <div class="form-group">
                   <label for="description">Description</label>
-                  <textarea name="" id="description" cols="30" rows="5" class="form-control"></textarea>
-                </div>
+                  <textarea name="" id="description" cols="30" rows="5" class="form-control" id="description" [(ngModel)]="car.description" name="description" required></textarea>
+                </div>     
               </div>
               <div class="col-md-6">
                 <div class="mb-3">
@@ -40,25 +40,25 @@
                   <div class="input-group">
                     <!-- <input type="file" class="form-control form-control-lg" id="formFileLg" >
                     <label class="input-group-text" for="formFileLg">Choose file</label> -->
-                    <input type="file" class="form-control form-control-lg" id="formFileLg"  style="display: none;">
+                    <input type="file" class="form-control form-control-lg" id="photo" (change)="onFileSelected($event)" accept="image/*" required>
                     <label class="input-group-text" for="formFileLg" style="cursor: pointer;">Choose file</label>
                   </div>
                 </div>
                 <div class="form-group">
                   <label for="name">Address *</label>
-                  <input type="text" class="form-control" id="adress">
+                  <input type="text" class="form-control" id="address" [(ngModel)]="car.address" name="address" required>
                 </div>
                 <div class="form-group">
                   <label for="matricule">registration number *</label>
-                  <input type="text" class="form-control" id="matricule">
+                  <input type="text" class="form-control" id="registration_num" [(ngModel)]="car.registration_num" name="registration_num" required>
                 </div>
                 <div class="form-group">
                   <label for="boitev">Gearbox *</label>
-                  <input type="text" class="form-control" id="boitev">
+                  <input type="text" class="form-control" id="gearbox" [(ngModel)]="car.gearbox" name="gearbox" required>
                 </div>
                 <div class="form-group">
                   <label for="nbplace">Number of places *</label>
-                  <input type="text" class="form-control" id="nbplace">
+                  <input type="text" class="form-control" id="nb_places" [(ngModel)]="car.nb_places" name="nb_places" required >
                 </div>
               </div>
             </div>
