@@ -1,5 +1,6 @@
 package com.mycompany.rentCar.Controllers;
 
+import com.mycompany.rentCar.CarDTO.CarDTO;
 import com.mycompany.rentCar.Entities.Cars;
 import com.mycompany.rentCar.Entities.Image;
 import com.mycompany.rentCar.Services.CarsService;
@@ -9,6 +10,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+
+import java.util.List;
+
 @CrossOrigin(origins = "http://localhost:4200")
 @RestController
 @RequestMapping("/api/cars")
@@ -40,5 +44,21 @@ public class CarsController {
         }
     }
 
+
+    @GetMapping("/getAllCars")
+    public ResponseEntity<List<CarDTO>> getAllCars() {
+        try {
+            // Obtenez la liste des voitures avec leurs images
+            List<CarDTO> carsWithImages = carsService.getAllCars();
+            System.out.println("carsWithImages");
+
+            // Vous pouvez retourner une réponse appropriée ici
+            return ResponseEntity.ok(carsWithImages);
+        } catch (Exception e) {
+            // Gérez les erreurs ici
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body(null);
+        }
+    }
 
 }
