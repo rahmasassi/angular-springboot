@@ -31,14 +31,10 @@ public class CarsController {
             @ModelAttribute Cars car
     ) {
         try {
-            // Ajoutez la voiture à la base de données en utilisant le service CarsService
             Cars savedCar = carsService.addCar(car);
-            // Ajoutez l'imariege à la voiture en utilisant le service ImageService
             Image addedImage = imageService.addImage(file, savedCar.getId());
-            // Vous pouvez retourner une réponse appropriée ici, par exemple, avec l'ID de la voiture
             return ResponseEntity.ok("Voiture ajoutée avec succès avec l'ID : " + savedCar.getId());
         } catch (Exception e) {
-            // Gérez les erreurs ici, par exemple, renvoyez une réponse d'erreur
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                     .body("Erreur lors de l'ajout de la voiture : " + e.getMessage());
         }
@@ -61,18 +57,29 @@ public class CarsController {
      @GetMapping("/getAllCars")
     public ResponseEntity<List<CarDTO>> getAllCars() {
         try {
-            // Obtenez la liste des voitures avec leurs images
             List<CarDTO> carsWithImages = carsService.getAllCars();
             System.out.println("carsWithImages");
-
-            // Vous pouvez retourner une réponse appropriée ici
             return ResponseEntity.ok(carsWithImages);
         } catch (Exception e) {
-            // Gérez les erreurs ici
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                     .body(null);
         }
     }
 
-
+    @GetMapping("/getCarById/{carId}")
+    public ResponseEntity<CarDTO> getCarById(@PathVariable Long carId) {
+        try {
+            Cars car = carsService.getCarById(carId);
+            if (car != null) {
+                CarDTO carDTO = new CarDTO(car);
+                return ResponseEntity.ok(carDTO);
+            } else {
+                return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                        .body(null);
+            }
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body(null);
+        }
+    }
 }
