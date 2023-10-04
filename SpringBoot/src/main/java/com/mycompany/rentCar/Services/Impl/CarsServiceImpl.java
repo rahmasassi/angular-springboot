@@ -37,6 +37,7 @@ public class CarsServiceImpl implements CarsService {
         existingCar.setNb_doors(updatedCar.getNb_doors());
         existingCar.setNb_places(updatedCar.getNb_places());
         existingCar.setAddress(updatedCar.getAddress());
+        existingCar.setDescription((updatedCar.getDescription()));
         existingCar.setPrice_per_day(updatedCar.getPrice_per_day());
         existingCar.setRegistration_num(updatedCar.getRegistration_num());
         existingCar.setGearbox(updatedCar.getGearbox());
@@ -61,5 +62,10 @@ public class CarsServiceImpl implements CarsService {
         return allCars.stream()
                 .map(CarDTO::new)
                 .collect(Collectors.toList());
+    }
+    @Override
+    public Cars getCarById(Long carId) {
+        return carsRepository.findById(carId)
+                .orElse(null);
     }
 }

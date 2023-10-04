@@ -17,6 +17,7 @@ public class Cars {
     private int nb_doors;
     private int nb_places;
     private String address;
+    private String description;
     private float price_per_day;
     private String registration_num;
     private String gearbox;

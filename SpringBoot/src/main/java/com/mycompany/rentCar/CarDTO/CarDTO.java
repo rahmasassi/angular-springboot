@@ -15,6 +15,7 @@ public class CarDTO {
     private int nb_doors;
     private int nb_places;
     private String address;
+    private String description;
     private float price_per_day;
     private String registration_num;
     private String gearbox;
@@ -29,6 +30,7 @@ public class CarDTO {
         this.nb_doors = car.getNb_doors();
         this.nb_places = car.getNb_places();
         this.address = car.getAddress();
+        this.description = car.getDescription();
         this.price_per_day = car.getPrice_per_day();
         this.registration_num = car.getRegistration_num();
         this.gearbox = car.getGearbox();
