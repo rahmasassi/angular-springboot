@@ -33,6 +33,7 @@ public class CarsServiceImpl implements CarsService {
         Cars existingCar = carsRepository.findById(carId)
                 .orElseThrow(() -> new EntityNotFoundException("La voiture avec l'ID " + carId + " n'a pas été trouvée"));
 
+        existingCar.setName(updatedCar.getName());
         existingCar.setModel(updatedCar.getModel());
         existingCar.setNb_doors(updatedCar.getNb_doors());
         existingCar.setNb_places(updatedCar.getNb_places());

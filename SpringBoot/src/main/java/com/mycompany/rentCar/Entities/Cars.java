@@ -13,6 +13,7 @@ public class Cars {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
+    private String name;
     private String model;
     private int nb_doors;
     private int nb_places;
