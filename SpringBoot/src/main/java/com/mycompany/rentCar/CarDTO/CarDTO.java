@@ -11,6 +11,8 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class CarDTO {
     private Long id;
+    private String name;
+
     private String model;
     private int nb_doors;
     private int nb_places;
@@ -26,6 +28,7 @@ public class CarDTO {
 
     public CarDTO(Cars car) {
         this.id = car.getId();
+        this.name = car.getName();
         this.model = car.getModel();
         this.nb_doors = car.getNb_doors();
         this.nb_places = car.getNb_places();

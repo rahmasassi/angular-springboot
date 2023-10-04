@@ -23,6 +23,7 @@ export class AddCarComponent {
     
       formData.append('model', ''); 
     }
+    formData.append('name', this.car.name || '');
     formData.append('nb_doors', this.car.nb_doors?.toString() || ''); 
     formData.append('price_per_day', this.car.price_per_day?.toString() || '');
     formData.append('description', this.car.description || '');
