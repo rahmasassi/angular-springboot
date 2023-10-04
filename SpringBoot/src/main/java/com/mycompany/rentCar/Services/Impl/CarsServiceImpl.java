@@ -13,6 +13,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.persistence.EntityNotFoundException;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
@@ -60,9 +61,24 @@ public class CarsServiceImpl implements CarsService {
      @Override
     public List<CarDTO> getAllCars() {
         List<Cars> allCars = (List<Cars>) carsRepository.findAll();
-        return allCars.stream()
-                .map(CarDTO::new)
-                .collect(Collectors.toList());
+         List<CarDTO> carsWithImages = new ArrayList<>();
+
+         for (Cars car : allCars) {
+             CarDTO carDTO = new CarDTO(car);
+
+             // Récupérez l'image associée à la voiture
+             Image image = car.getImage();
+             if (image != null) {
+                 carDTO.setImageId(image.getId());
+                 carDTO.setImageData(image.getData());
+                 carDTO.setImageFileType(image.getFileType());
+                 // Ajoutez d'autres propriétés d'image si nécessaires
+             }
+
+             carsWithImages.add(carDTO);
+         }
+
+         return carsWithImages;
     }
     @Override
     public Cars getCarById(Long carId) {

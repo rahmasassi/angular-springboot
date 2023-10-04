@@ -13,8 +13,7 @@ import javax.persistence.*;
 public class Image {
     @Id
     @GeneratedValue(generator = "uuid")
-    @GenericGenerator(name = "uuid", strategy = "uuid2")
-    private String id;
+    private long id;
     private String fileName;
     private String fileType;
     @Lob

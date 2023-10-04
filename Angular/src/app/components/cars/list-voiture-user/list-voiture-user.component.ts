@@ -1,24 +1,26 @@
-import { Component } from '@angular/core';
-import { Car } from '../../../models/car.model';
-
+import { Component, OnInit } from '@angular/core';
+import { CarsService } from 'src/app/services/cars.service';
+import { CarDTO } from 'src/app/Models/CarDTO';
 @Component({
   selector: 'app-list-voiture-user',
   templateUrl: './list-voiture-user.component.html',
   styleUrls: ['./list-voiture-user.component.css']
 })
-export class ListVoitureUserComponent {
+export class ListVoitureUserComponent implements OnInit {
+  cars: CarDTO[] = [];
+  constructor(private carService: CarsService) { }
+  ngOnInit(): void {
+    this.carService.getAllCars().subscribe((data: CarDTO[]) => {
+      this.cars = data;
+  });
+}
 
-  cars: Car[] = [
-    { name: 'Mercedes Grand Sedan', brand: 'Cheverolet', price: 500, perDay: true, image: 'assets/images/car-1.jpg' },
-    { name: 'Range Rover', brand: 'Subaru', price: 500, perDay: true, image: 'assets/images/car-2.jpg' },
-    { name: 'Range Rover', brand: 'Subaru', price: 500, perDay: true, image: 'assets/images/car-2.jpg' },
-    { name: 'Range Rover', brand: 'Subaru', price: 500, perDay: true, image: 'assets/images/car-2.jpg' },
-    { name: 'Range Rover', brand: 'Subaru', price: 500, perDay: true, image: 'assets/images/car-2.jpg' },
-    { name: 'Range Rover', brand: 'Subaru', price: 500, perDay: true, image: 'assets/images/car-2.jpg' },
-    { name: 'Range Rover', brand: 'Subaru', price: 500, perDay: true, image: 'assets/images/car-2.jpg' },
-    { name: 'Range Rover', brand: 'Subaru', price: 500, perDay: true, image: 'assets/images/car-2.jpg' },
-    { name: 'Range Rover', brand: 'Subaru', price: 500, perDay: true, image: 'assets/images/car-2.jpg' },
-    // Ajoutez d'autres voitures ici
-  ];
+getImageUrl(car: CarDTO): string {
+  if (car.imageData) {
+    const base64Image = 'data:image/' + car.fileType + ';base64,' + car.imageData;
+    return base64Image;
+  }
+  return '';
+}
 
 }

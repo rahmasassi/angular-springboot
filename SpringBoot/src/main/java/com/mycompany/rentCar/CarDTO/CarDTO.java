@@ -21,11 +21,11 @@ public class CarDTO {
     private float price_per_day;
     private String registration_num;
     private String gearbox;
-    private String imageId;
+    private long imageId;
     private String imageName;
     private String imageFileType;
-    // ... autres champs de l'image que vous voulez afficher
 
+    private byte[] imageData;
     public CarDTO(Cars car) {
         this.id = car.getId();
         this.name = car.getName();
@@ -43,6 +43,7 @@ public class CarDTO {
             this.imageId = image.getId();
             this.imageName = image.getFileName();
             this.imageFileType = image.getFileType();
+            this.imageData= image.getData();
             // ... affectez d'autres champs de l'image
         }
     }
