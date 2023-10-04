@@ -12,4 +12,6 @@ public interface CarsService {
     Cars addCar(Cars car);
     Cars updatecar(Long carId, Cars updatedCar, MultipartFile newImage) throws IOException;
     List<CarDTO> getAllCars();
+    Cars getCarById(Long carId);
+
 }
