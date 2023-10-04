@@ -3,6 +3,7 @@ import { Image } from "./image";
 
 export class Cars {
   id?: number; 
+  name?: string;
   model?: string;
   nb_doors?: number;
   nb_places?: number;
