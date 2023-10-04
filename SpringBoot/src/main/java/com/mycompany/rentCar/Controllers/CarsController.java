@@ -66,6 +66,8 @@ public class CarsController {
         }
     }
 
+
+
     @GetMapping("/getCarById/{carId}")
     public ResponseEntity<CarDTO> getCarById(@PathVariable Long carId) {
         try {
