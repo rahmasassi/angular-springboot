@@ -25,8 +25,8 @@
                 <span class="cat">{{ car.model }}</span>
                 <p class="price ml-auto">{{ car.price_per_day }} <span>/day</span></p>
               </div>
-              <app-button-details-edit></app-button-details-edit>
-              <app-button-add-delete></app-button-add-delete>
+              <app-button-details-edit (editClicked)="editCar(car)"></app-button-details-edit>
+              <app-button-add-delete (deleteClicked)="deleteCar(car)"></app-button-add-delete>
             </div>
           </div>
         </div>

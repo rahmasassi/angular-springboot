@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
+import { Observable, catchError, throwError } from 'rxjs';
 import { Cars } from '../Models/cars';
 import { CarDTO } from '../Models/CarDTO';
 @Injectable({
@@ -16,15 +16,24 @@ export class CarsService {
     return this.http.post(`${this.apiUrl}/addCar`, carData);
   }
 
-  getCarById(carId: number): Observable<Cars> {
-    return this.http.get<Cars>(`${this.apiUrl}/getCarById/${carId}`);
+  getCarById(carId: number): Observable<CarDTO> {
+    return this.http.get<CarDTO>(`${this.apiUrl}/getCarById/${carId}`);
   }
 
-  updateStudent(carId: number, value: any): Observable<Object> {
-    return this.http.post(`${this.apiUrl}/update/${carId}`, value);
+  updateCar(carId: number, formData: FormData): Observable<any> {
+    const headers = new HttpHeaders({
+      'enctype': 'multipart/form-data'
+    });
+  
+    return this.http.put(`${this.apiUrl}/updateCar/${carId}`, formData, { headers });
   }
+  
 
   getAllCars(): Observable<CarDTO[]> {
     return this.http.get<CarDTO[]>(`${this.apiUrl}/getAllCars`);
+  }
+
+  delete(carId: number): Observable<void> {
+    return this.http.delete<void>(`${this.apiUrl}/delete/${carId}`);
   }
 }
