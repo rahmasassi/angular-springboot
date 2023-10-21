@@ -10,8 +10,9 @@ import java.util.List;
 
 public interface CarsService {
     Cars addCar(Cars car);
-    Cars updatecar(Long carId, Cars updatedCar, MultipartFile newImage) throws IOException;
+    //Cars updatecar(Long carId, Cars updatedCar, MultipartFile newImage) throws IOException;
+    Cars updateCar(Cars car);
     List<CarDTO> getAllCars();
     Cars getCarById(Long carId);
-
+    void deleteCar(Long carId);
 }

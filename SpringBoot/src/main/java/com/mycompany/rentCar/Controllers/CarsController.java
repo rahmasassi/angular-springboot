@@ -40,15 +40,37 @@ public class CarsController {
         }
     }
 
-    @PutMapping("/update/{carId}")
-    public ResponseEntity<String> update(
-            @PathVariable Long carId,
-            @ModelAttribute Cars updatedCar,
-            @RequestParam("file") MultipartFile newImage
+    @PutMapping("/updateCar/{carId}")
+    public ResponseEntity<String> updateCar(
+            @PathVariable("carId") long carId,
+            @RequestParam(value = "file", required = false) MultipartFile file,
+            @ModelAttribute Cars updatedCar
     ) {
         try {
-            Cars update = carsService.updatecar(carId, updatedCar, newImage);
-            return ResponseEntity.ok("Voiture mise à jour avec succès avec l'ID : " + update.getId());
+            Cars existingCar = carsService.getCarById(carId);
+            if (existingCar == null) {
+                return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                        .body("La voiture avec l'ID " + carId + " n'a pas été trouvée");
+            }
+
+            existingCar.setName(updatedCar.getName());
+            existingCar.setModel(updatedCar.getModel());
+            existingCar.setNb_doors(updatedCar.getNb_doors());
+            existingCar.setNb_places(updatedCar.getNb_places());
+            existingCar.setAddress(updatedCar.getAddress());
+            existingCar.setDescription(updatedCar.getDescription());
+            existingCar.setPrice_per_day(updatedCar.getPrice_per_day());
+            existingCar.setRegistration_num(updatedCar.getRegistration_num());
+            existingCar.setGearbox(updatedCar.getGearbox());
+
+            if (file != null && !file.isEmpty()) {
+                Image updatedImage = imageService.updateImage(file, carId);
+                existingCar.setImage(updatedImage);
+            }
+
+            carsService.updateCar(existingCar);
+
+            return ResponseEntity.ok("Voiture mise à jour avec succès avec l'ID : " + existingCar.getId());
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                     .body("Erreur lors de la mise à jour de la voiture : " + e.getMessage());
@@ -66,8 +88,6 @@ public class CarsController {
         }
     }
 
-
-
     @GetMapping("/getCarById/{carId}")
     public ResponseEntity<CarDTO> getCarById(@PathVariable Long carId) {
         try {
@@ -82,6 +102,17 @@ public class CarsController {
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                     .body(null);
+        }
+    }
+
+    @DeleteMapping("/delete/{carId}")
+    public ResponseEntity<String> deleteCar(@PathVariable Long carId) {
+        try {
+            carsService.deleteCar(carId);
+            return ResponseEntity.ok("Voiture supprimée avec succès avec l'ID : " + carId);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body("Erreur lors de la suppression de la voiture : " + e.getMessage());
         }
     }
 }
