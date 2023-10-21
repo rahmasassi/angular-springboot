@@ -12,7 +12,6 @@ import lombok.NoArgsConstructor;
 public class CarDTO {
     private Long id;
     private String name;
-
     private String model;
     private int nb_doors;
     private int nb_places;
@@ -44,7 +43,6 @@ public class CarDTO {
             this.imageName = image.getFileName();
             this.imageFileType = image.getFileType();
             this.imageData= image.getData();
-            // ... affectez d'autres champs de l'image
         }
     }
 }

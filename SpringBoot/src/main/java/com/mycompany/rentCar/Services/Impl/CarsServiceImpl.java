@@ -29,35 +29,11 @@ public class CarsServiceImpl implements CarsService {
         return carsRepository.save(car);
     }
 
-    @Override
-    public Cars updatecar(Long carId, Cars updatedCar, MultipartFile newImage) throws IOException {
-        Cars existingCar = carsRepository.findById(carId)
-                .orElseThrow(() -> new EntityNotFoundException("La voiture avec l'ID " + carId + " n'a pas été trouvée"));
 
-        existingCar.setName(updatedCar.getName());
-        existingCar.setModel(updatedCar.getModel());
-        existingCar.setNb_doors(updatedCar.getNb_doors());
-        existingCar.setNb_places(updatedCar.getNb_places());
-        existingCar.setAddress(updatedCar.getAddress());
-        existingCar.setDescription((updatedCar.getDescription()));
-        existingCar.setPrice_per_day(updatedCar.getPrice_per_day());
-        existingCar.setRegistration_num(updatedCar.getRegistration_num());
-        existingCar.setGearbox(updatedCar.getGearbox());
-
-        Image existingImage = existingCar.getImage();
-        if (existingImage == null) {
-            Image newImageEntity = imageService.addImage(newImage, carId);
-            existingCar.setImage(newImageEntity);
-        } else {
-            String fileName = StringUtils.cleanPath(Objects.requireNonNull(newImage.getOriginalFilename()));
-            String fileType = newImage.getContentType();
-            byte[] data = newImage.getBytes();
-            existingImage.setFileName(fileName);
-            existingImage.setFileType(fileType);
-            existingImage.setData(data);
-        }
-        return carsRepository.save(existingCar);
+    public Cars updateCar(Cars car) {
+        return carsRepository.save(car);
     }
+
      @Override
     public List<CarDTO> getAllCars() {
         List<Cars> allCars = (List<Cars>) carsRepository.findAll();
@@ -66,13 +42,11 @@ public class CarsServiceImpl implements CarsService {
          for (Cars car : allCars) {
              CarDTO carDTO = new CarDTO(car);
 
-             // Récupérez l'image associée à la voiture
              Image image = car.getImage();
              if (image != null) {
                  carDTO.setImageId(image.getId());
                  carDTO.setImageData(image.getData());
                  carDTO.setImageFileType(image.getFileType());
-                 // Ajoutez d'autres propriétés d'image si nécessaires
              }
 
              carsWithImages.add(carDTO);
@@ -84,5 +58,12 @@ public class CarsServiceImpl implements CarsService {
     public Cars getCarById(Long carId) {
         return carsRepository.findById(carId)
                 .orElse(null);
+    }
+    @Override
+    public void deleteCar(Long carId) {
+        Cars carToDelete = carsRepository.findById(carId)
+                .orElseThrow(() -> new EntityNotFoundException("La voiture avec l'ID " + carId + " n'a pas été trouvée"));
+
+        carsRepository.delete(carToDelete);
     }
 }

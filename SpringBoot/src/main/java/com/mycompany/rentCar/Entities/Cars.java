@@ -22,7 +22,7 @@ public class Cars {
     private float price_per_day;
     private String registration_num;
     private String gearbox;
-    @OneToOne(mappedBy = "cars")
+    @OneToOne(mappedBy = "cars", cascade = CascadeType.REMOVE)
     private Image image;
 
 
