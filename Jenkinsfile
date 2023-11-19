@@ -10,7 +10,9 @@ pipeline {
             steps {
                 script{
                     echo 'building the application'
-                    sh 'mvn package'
+                    dir('SpringBoot') {
+                        sh 'mvn package'
+                    }
                 }
             }
         }
