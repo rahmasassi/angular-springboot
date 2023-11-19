@@ -1,16 +1,31 @@
 pipeline {
     agent any
 
+    tools{
+        maven 'maven-3.6'
+    }
+
     stages {
-        stage('Build Angular') {
+        stage('build jar') {
             steps {
-                echo "angular"
+                script{
+                    echo 'building the application'
+                    sh 'mvn package'
+                }
             }
         }
 
-        stage('Build Spring Boot') {
+        stage('build image') {
             steps {
-                echo "spring boot"
+                script{
+                    echo 'building the docker image'
+                    withCredentials([usernamePassword(credentialsId:'docker-hub-repo', passwordVariable:'PASS',usernameVariable:'USER')]){
+                        sh "echo $PASS | docker login -u $USER --password-stdin"
+                        sh 'docker build -t  rahmasassi/springboot ./SpringBoot/'
+                        sh "echo $PASS | docker login -u $USER --password-stdin "
+                        sh 'docker push rahmasassi/springboot'
+                    }
+                }
             }
         }
 
