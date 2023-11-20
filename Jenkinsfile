@@ -41,7 +41,7 @@ pipeline {
                         sh "echo $PASS | docker login -u $USER --password-stdin "
                         sh 'docker push rahmasassi/springboot'
 
-                        sh 'docker build -t  rahmasassi/Angular ./Angular/'
+                        sh 'docker build -t  rahmasassi/angular ./Angular/'
                         sh 'docker push rahmasassi/angular'
                     }
                 }
