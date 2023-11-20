@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
-import { Observable, catchError, throwError } from 'rxjs';
+import { Observable, catchError, map, throwError } from 'rxjs';
 import { Cars } from '../Models/cars';
 import { CarDTO } from '../Models/CarDTO';
 @Injectable({
@@ -34,6 +34,16 @@ export class CarsService {
   }
 
   delete(carId: number): Observable<void> {
-    return this.http.delete<void>(`${this.apiUrl}/delete/${carId}`);
+    const url = `${this.apiUrl}/delete/${carId}`;
+    return this.http.delete(url, { responseType: 'text' }).pipe(
+      catchError((error: any) => {
+        console.error('Error deleting car:', error);
+        throw error; 
+      }),
+      map((response: any) => {
+        console.log(response); 
+        return; 
+      })
+    );
   }
 }

@@ -26,18 +26,18 @@ export class ListClientComponent {
     if (user && user.id) {
       this.userService.deleteUser(user.id).subscribe(
         () => {
-          console.log(`Agency with ID ${user.id} deleted successfully.`);
+          console.log(`User with ID ${user.id} deleted successfully.`);
           this.router.navigate(['/list-client']).then(() => {
             location.reload();
           });
           
         },
         (error) => {
-          console.error('Error deleting agency:', error);
+          console.error('Error deleting user:', error);
         }
       );
     } else {
-      console.error('Invalid agency data for deletion.', user);
+      console.error('Invalid user data for deletion.', user);
     }
   }
 }
