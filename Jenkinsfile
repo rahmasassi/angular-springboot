@@ -14,6 +14,7 @@ pipeline {
                     echo 'Building the Angular application'
                     dir('Angular') {
                         sh 'npm install'
+                        sh 'npm install -g @angular/cli'
                         sh 'ng build'
                     }
                 }
