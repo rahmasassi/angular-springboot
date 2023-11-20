@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { Car } from '../../../models/car.model';
+import { Car } from '../../../Models/car.model';
 
 @Component({
   selector: 'app-list-voiture-agence',
