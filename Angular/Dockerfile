@@ -9,7 +9,7 @@ RUN npm install -g @angular/cli
 
 COPY . .
 
-RUN ng build --prod
+RUN ng build 
 
 RUN npm prune --production
 
