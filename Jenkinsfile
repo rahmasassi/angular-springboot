@@ -48,6 +48,26 @@ pipeline {
             }
         }
 
+        stage('Connect to EC2') {
+            steps {
+                sshagent(['ec2-server-key']) {
+                    sh "ssh -o StrictHostKeyChecking=no ${SSH_USER}@${EC2_HOST}"
+                }
+            }
+        }
+        stage('Pull Docker image') {
+            steps {
+                sshagent(['ec2-server-key']) {
+                    sh "ssh ${SSH_USER}@${EC2_HOST} docker container rm -f springboot"
+                    sh "ssh ${SSH_USER}@${EC2_HOST} docker container rm -f angular"
+                    sh "ssh ${SSH_USER}@${EC2_HOST} docker rmi \$(docker images -a -q) >/dev/null 2>&1 || true"
+                    sh "ssh ${SSH_USER}@${EC2_HOST} docker pull  rahmasassi/springboot:latest"
+                    sh "ssh ${SSH_USER}@${EC2_HOST} docker pull  rahmasassi/angular:latest"
+                }
+            }
+        }
+
+
        
 
 
