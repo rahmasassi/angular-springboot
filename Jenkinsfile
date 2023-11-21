@@ -1,6 +1,11 @@
 pipeline {
     agent any
 
+    environment {
+        SSH_USER = 'ec2-user'
+        EC2_HOST = 'ec2-54-87-235-242.compute-1.amazonaws.com'
+    }
+
     tools{
         maven 'maven-3.6'
         nodejs 'nodeJs'
