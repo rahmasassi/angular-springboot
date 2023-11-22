@@ -1,4 +1,4 @@
-FROM node:15.2.6 AS builder
+FROM node:10.19.0 AS builder
 
 WORKDIR /app
 
@@ -7,7 +7,7 @@ ENV PATH /app/node_modules/.bin:$PATH
 COPY package*.json ./
 
 RUN npm install
-RUN npm install -g @angular/cli@15.2.6
+RUN npm install -g @angular/cli@10.19.0
 
 COPY . .
 
