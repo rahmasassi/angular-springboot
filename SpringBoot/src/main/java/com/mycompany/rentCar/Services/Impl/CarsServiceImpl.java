@@ -3,6 +3,7 @@ package com.mycompany.rentCar.Services.Impl;
 import com.mycompany.rentCar.CarDTO.CarDTO;
 import com.mycompany.rentCar.Entities.Cars;
 import com.mycompany.rentCar.Entities.Image;
+import com.mycompany.rentCar.Entities.Reservation;
 import com.mycompany.rentCar.Repositories.CarsRepository;
 import com.mycompany.rentCar.Services.CarsService;
 import com.mycompany.rentCar.Services.ImageService;
@@ -66,4 +67,10 @@ public class CarsServiceImpl implements CarsService {
 
         carsRepository.delete(carToDelete);
     }
+//        @Override
+//        public List<Reservation> getAllReservationByCarId(Long carId) {
+//        return carsRepository.findAllByCarId(carId);
+//
+//    }
+
 }

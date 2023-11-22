@@ -2,6 +2,7 @@ package com.mycompany.rentCar.Services;
 
 import com.mycompany.rentCar.CarDTO.CarDTO;
 import com.mycompany.rentCar.Entities.Cars;
+import com.mycompany.rentCar.Entities.Reservation;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
@@ -15,4 +16,5 @@ public interface CarsService {
     List<CarDTO> getAllCars();
     Cars getCarById(Long carId);
     void deleteCar(Long carId);
+    //List<Reservation> getAllReservationByCarId(Long carId );
 }

@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -39,6 +39,7 @@ import { ListAgenceComponent } from './components/agency/list-agence/list-agence
 import { ListReclamationComponent } from './components/reclamation/list-reclamation/list-reclamation.component';
 import { ListClientComponent } from './components/client/list-client/list-client.component';
 import { EditCarComponent } from './edit-car/edit-car.component';
+import { ButtonReserveComponent } from './components/button-reserve/button-reserve.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -70,6 +71,7 @@ import { EditCarComponent } from './edit-car/edit-car.component';
     AddReservationComponent,
     CalendarComponent,
     EditCarComponent,
+    ButtonReserveComponent,
 
 
   ],
@@ -83,6 +85,7 @@ import { EditCarComponent } from './edit-car/edit-car.component';
     MatNativeDateModule,
     FormsModule,
     HttpClientModule,
+    ReactiveFormsModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

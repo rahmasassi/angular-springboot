@@ -65,23 +65,23 @@ const routes: Routes = [
       },
       {
         path: 'reservation-agence',
-        component: ListReservationAgenceComponent 
+        component: ListReservationAgenceComponent
       },
       {
         path: 'reservation-client',
-        component: ListReservationClientComponent 
+        component: ListReservationClientComponent
       },
       {
         path: 'list-voiture-user',
-        component: ListVoitureUserComponent 
+        component: ListVoitureUserComponent
       },
       {
         path: 'list-voiture-agence',
-        component: ListVoitureAgenceComponent 
+        component: ListVoitureAgenceComponent
       },
       {
         path: 'list-agence',
-        component: ListAgenceComponent 
+        component: ListAgenceComponent
       },
       {
         path: 'list-reclamation',
@@ -100,7 +100,7 @@ const routes: Routes = [
         component: AddReclamationComponent
       },
       {
-        path: 'reservation',
+        path: 'reservation/:id',
         component: AddReservationComponent
       },
       {
