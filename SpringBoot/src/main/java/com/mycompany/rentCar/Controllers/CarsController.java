@@ -80,7 +80,7 @@ public class CarsController {
     public ResponseEntity<List<CarDTO>> getAllCars() {
         try {
             List<CarDTO> carsWithImages = carsService.getAllCars();
-            System.out.println("carsWithImages");
+
             return ResponseEntity.ok(carsWithImages);
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)

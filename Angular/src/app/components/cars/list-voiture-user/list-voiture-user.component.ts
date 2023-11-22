@@ -2,6 +2,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { CarsService } from 'src/app/services/cars.service';
 import { CarDTO } from 'src/app/Models/CarDTO';
 import { Router } from '@angular/router';
+import { ca } from 'date-fns/locale';
 
 @Component({
   selector: 'app-list-voiture-user',
@@ -13,7 +14,7 @@ export class ListVoitureUserComponent implements OnInit {
   cars: CarDTO[] = [];
 
   constructor(private carService: CarsService, private router: Router) { }
-  
+
   ngOnInit(): void {
     this.carService.getAllCars().subscribe((data: CarDTO[]) => {
       this.cars = data;
@@ -52,6 +53,13 @@ getImageUrl(car: CarDTO): string {
       this.router.navigate(['/edit-car', car.id]);
     } else {
       console.error('Invalid car data for editing.', car);
+    }
+  }
+  reserveCar(car: CarDTO):void{
+    if (car && car.id){
+      this.router.navigate(['/reservation', car.id]);
+    }else{
+      console.error('Invalid car data for reserving.', car);
     }
   }
 

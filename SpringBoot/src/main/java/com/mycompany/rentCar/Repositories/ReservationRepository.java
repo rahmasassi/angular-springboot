@@ -8,7 +8,6 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface CarsRepository extends CrudRepository<Cars, Long> {
-    //List<Reservation> findAllByCarId(Long carId);
-
+public interface ReservationRepository extends CrudRepository<Reservation, Long> {
+    List<Reservation> findByCarId(long carId);
 }
