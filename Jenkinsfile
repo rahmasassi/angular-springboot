@@ -77,8 +77,8 @@ pipeline {
             steps {
                 sshagent(['ssh-key']) {
                     sh "ssh ${SSH_USER}@${EC2_HOST} docker network create my-network >/dev/null 2>&1 || true"
-                    sh "ssh ${SSH_USER}@${EC2_HOST} docker run --rm --name springboot  --network my-network --hostname springboot -d  -p 9977:9977   rahmasassi/springboot:latest"
-                    sh "ssh ${SSH_USER}@${EC2_HOST} docker run --rm  --name angular  --network my-network --hostname angular  -d -p 8080:8080   rahmasassi/angular:latest"
+                    sh "ssh ${SSH_USER}@${EC2_HOST} docker run --rm --name springboot  --network my-network --hostname springboot -d  -p 8081:8081   rahmasassi/springboot:latest"
+                    sh "ssh ${SSH_USER}@${EC2_HOST} docker run --rm  --name angular  --network my-network --hostname angular  -d -p 4200:4200   rahmasassi/angular:latest"
                 }
             }
         }
