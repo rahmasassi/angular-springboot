@@ -5,7 +5,7 @@ ENV PATH /app/node_modules/.bin:$PATH
 
 COPY package*.json ./
 RUN npm install
-RUN npm install -g @angular/cli@<version>
+RUN npm install -g @angular/cli@15.2.6
 
 COPY . .
 
