@@ -35,6 +35,9 @@ getImageUrl(car: CarDTO): string {
       this.carService.delete(car.id).subscribe(
         () => {
           console.log(`Car with ID ${car.id} deleted successfully.`);
+          this.router.navigate(['/list-voiture-user']).then(() => {
+          location.reload();
+          });
         },
         (error) => {
           console.error('Error deleting car:', error);
@@ -44,6 +47,7 @@ getImageUrl(car: CarDTO): string {
       console.error('Invalid car data for deletion.', car);
     }
   }
+  
   editCar(car: CarDTO): void {
     if (car && car.id) {
       this.router.navigate(['/edit-car', car.id]);

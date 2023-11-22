@@ -3,12 +3,13 @@
 	
 		<!-- Sign In -->
 		<div class="container1__form container1--signin">
-			<form action="#" class="form" id="form2">
+			<form (ngSubmit)="onSubmit()" class="form" id="form2" #loginForm="ngForm">
 				<h2 class="form__title">Sign In</h2>
-				<input type="text" placeholder="Username" class="input" />
-				<input type="password" placeholder="Password" class="input" />
+				<div *ngIf="loginError" class="error-message">Username or password incorrect</div>
+				<input type="text" placeholder="Username" name="username" [(ngModel)]="username" class="input" required>
+				<input type="password" placeholder="Password" name="password" [(ngModel)]="password" class="input" required>
 				<a href="#" class="link1">Forgot your password?</a>
-				<button class="btn1">Sign In</button>
+				<button type="submit" class="btn1" [disabled]="loginForm.invalid">Sign In</button>
 			</form>
 		</div>
 	

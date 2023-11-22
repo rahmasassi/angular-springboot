@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { Cars } from 'src/app/Models/cars';
 import { CarsService } from 'src/app/services/cars.service';
 import { NgModel } from '@angular/forms';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-add-car',
@@ -9,7 +10,9 @@ import { NgModel } from '@angular/forms';
   styleUrls: ['./add-car.component.css']
 })
 export class AddCarComponent {
-  constructor(private carsService: CarsService) { }
+  constructor(
+    private carsService: CarsService,
+    private router: Router) { }
 
   car: Cars = new Cars();
  
@@ -36,6 +39,7 @@ export class AddCarComponent {
     this.carsService.addCarWithImage(formData).subscribe(
       (response) => {
         console.log('Réponse du backend :', response);
+        window.location.href = '/list-voiture-user';
       },
       (error) => {
         console.error('Erreur lors de l\'envoi des données au backend :', error);
@@ -43,12 +47,9 @@ export class AddCarComponent {
     );
   }
   
-  
   onFileSelected(event: any) {
     if (event.target.files.length > 0) {
       this.car.photo = event.target.files[0] as File;
     }
   }
-  
-
 }
