@@ -31,6 +31,8 @@ import { CalendarComponent } from './components/calendar/calendar.component';
 import { MatNativeDateModule } from '@angular/material/core';
 
 
+
+
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { faSearch, faInfoCircle, faExclamationTriangle, faWarning } from '@fortawesome/free-solid-svg-icons';
 import { ButtonDetailsEditComponent } from './components/button-details-edit/button-details-edit.component';
@@ -38,6 +40,11 @@ import { ButtonAddDeleteComponent } from './components/button-add-delete/button-
 import { ListAgenceComponent } from './components/agency/list-agence/list-agence.component';
 import { ListReclamationComponent } from './components/reclamation/list-reclamation/list-reclamation.component';
 import { ListClientComponent } from './components/client/list-client/list-client.component';
+import { SearchCarsComponent } from './search-cars/search-cars.component';
+import { MatButtonModule } from '@angular/material/button';
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatIconModule } from '@angular/material/icon';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -68,6 +75,10 @@ import { ListClientComponent } from './components/client/list-client/list-client
     AddReclamationComponent,
     AddReservationComponent,
     CalendarComponent,
+    SearchCarsComponent,
+
+
+    
 
 
   ],
@@ -81,6 +92,9 @@ import { ListClientComponent } from './components/client/list-client/list-client
     MatNativeDateModule,
     FormsModule,
     HttpClientModule,
+    MatButtonModule,
+    MatDialogModule,
+    MatIconModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

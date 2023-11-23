@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { Cars } from 'src/app/Models/cars';
 import { CarsService } from 'src/app/services/cars.service';
 import { NgModel } from '@angular/forms';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-add-car',
@@ -9,7 +10,7 @@ import { NgModel } from '@angular/forms';
   styleUrls: ['./add-car.component.css']
 })
 export class AddCarComponent {
-  constructor(private carsService: CarsService) { }
+  constructor(private carsService: CarsService,private router: Router) { }
 
   car: Cars = new Cars();
  
@@ -33,14 +34,42 @@ export class AddCarComponent {
     formData.append('gearbox', this.car.gearbox || '');
     formData.append('nb_places', this.car.nb_places?.toString() || '');
 
+    // this.carsService.addCarWithImage(formData).subscribe(
+    //   (response) => {
+    //     console.log('Réponse du backend :', response);
+    //     // this.router.navigateByUrl('list-voiture-user');
+    //     this.router.navigate(['/list-voiture-user']);
+    //   },
+    //   (error) => {
+    //     console.error('Erreur lors de l\'envoi des données au backend :', error);
+    //   }
+    // );
+    // this.carsService.addCarWithImage(formData).subscribe(
+    //   (response) => {
+    //     console.log('Réponse du backend :', response);
+    //     if (response && response.message) {
+    //       alert(response.message); // Affichez le message de la réponse
+    //       if (response.id) {
+    //         this.router.navigate(['/list-voiture-user']);
+    //       }
+    //     }
+    //   },
+    //   (error) => {
+    //     console.error('Erreur lors de l\'envoi des données au backend :', error);
+    //   }
+    // );
     this.carsService.addCarWithImage(formData).subscribe(
       (response) => {
         console.log('Réponse du backend :', response);
+        if (response.id) {
+          this.router.navigate(['/list-voiture-user']);
+        }
       },
       (error) => {
         console.error('Erreur lors de l\'envoi des données au backend :', error);
       }
     );
+    
   }
   
   
