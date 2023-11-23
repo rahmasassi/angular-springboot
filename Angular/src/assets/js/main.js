@@ -133,14 +133,48 @@
 	});
 
   // Afficher le calendrier lors du clic
-  const datePicker = document.getElementById('datePicker');
-  datePicker.addEventListener('click', () => {
-    datePicker.setAttribute('type', 'text'); // Afficher le calendrier
+//   const datePicker = document.getElementById('datePicker');
+//     datePicker.addEventListener('click', () => {
+//     datePicker.setAttribute('type', 'text'); // Afficher le calendrier
+//   });
+// const datePicker = document.getElementById('datePicker');
+// datePicker.addEventListener('click', () => {
+//   datePicker.setAttribute('type', 'text'); // Modifiez le type de l'élément en "text"
+// });
+// document.addEventListener('DOMContentLoaded', function() {
+// 	const datePicker = document.getElementById('datePicker');
+// 	if (datePicker) {
+// 	  datePicker.addEventListener('click', () => {
+// 		datePicker.setAttribute('type', 'text');
+// 	  });
+// 	}
+//   });
+document.addEventListener('DOMContentLoaded', function() {
+	const datePicker = document.getElementById('datePicker');
+	if (datePicker) {
+	  datePicker.addEventListener('click', (event) => {
+		// Code à exécuter lorsque l'utilisateur clique sur l'élément datePicker.
+		datePicker.setAttribute('type', 'text');
+	  });
+	}
   });
+  
 
   // Cacher le calendrier après la sélection
-  datePicker.addEventListener('change', () => {
-    datePicker.setAttribute('type', 'date'); // Cacher le calendrier après la sélection
+//   datePicker.addEventListener('change', () => {
+//     datePicker.setAttribute('type', 'date'); // Cacher le calendrier après la sélection
+//   });
+document.addEventListener('DOMContentLoaded', function() {
+	// Récupérez l'élément avec l'ID "datePicker"
+	const datePicker = document.getElementById('datePicker');
+  
+	// Vérifiez si l'élément existe
+	if (datePicker) {
+	  // Attachez un gestionnaire d'événements "change"
+	  datePicker.addEventListener('change', () => {
+		datePicker.setAttribute('type', 'date'); // Cacher le calendrier après la sélection
+	  });
+	}
   });
 
 	// scroll

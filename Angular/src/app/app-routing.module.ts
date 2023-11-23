@@ -22,6 +22,7 @@ import { AddCarComponent } from './components/cars/add-car/add-car.component';
 import { AddReclamationComponent } from './components/reclamation/add-reclamation/add-reclamation.component';
 import { AddReservationComponent } from './components/reservations/add-reservation/add-reservation.component';
 import { CalendarComponent } from './components/calendar/calendar.component';
+import { SearchCarsComponent } from './search-cars/search-cars.component';
 
 
 const routes: Routes = [
@@ -105,7 +106,11 @@ const routes: Routes = [
       {
         path: 'calendar',
         component:CalendarComponent
-      }
+      },
+      { path: 'search/:keyword',
+       component: ListVoitureUserComponent },
+       
+      { path: 'search', component: ListVoitureUserComponent }
     ],
   }
 ];

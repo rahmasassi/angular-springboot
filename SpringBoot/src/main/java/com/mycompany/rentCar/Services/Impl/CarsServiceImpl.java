@@ -16,7 +16,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
-import java.util.stream.Collectors;
 
 @Service
 @AllArgsConstructor
@@ -85,4 +84,166 @@ public class CarsServiceImpl implements CarsService {
         return carsRepository.findById(carId)
                 .orElse(null);
     }
+
+public List<CarDTO> getCarsByName(String name) {
+    List<CarDTO> matchingCars = new ArrayList<>();
+
+    try {
+
+        List<CarDTO> allCars = getAllCars();
+
+
+        for (CarDTO car : allCars) {
+            if (car != null && car.getName() != null && car.getName().equalsIgnoreCase(name)) {
+                // Si le nom de la voiture correspond à la recherche, ajoutez-la à la liste de résultats
+                matchingCars.add(car);
+            }
+        }
+    } catch (Exception e) {
+        e.printStackTrace(); // Enregistrez l'exception dans les journaux
+
+    }
+
+    return matchingCars;
+}
+
+
+   @Override
+    public List<CarDTO> getCarsByModel(String model) {
+        List<CarDTO> matchingCars = new ArrayList<>();
+        try {
+            List<CarDTO> allCars = getAllCars();
+            for (CarDTO car : allCars) {
+                if (car != null && car.getModel() != null && car.getModel().equalsIgnoreCase(model)) {
+                    matchingCars.add(car);
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return matchingCars;
+    }
+    @Override
+    public List<CarDTO> getCarsByAddress(String address) {
+        List<CarDTO> matchingCars = new ArrayList<>();
+        try {
+            List<CarDTO> allCars = getAllCars();
+            for (CarDTO car : allCars) {
+                if (car != null && car.getAddress() != null && car.getAddress().equalsIgnoreCase(address)) {
+                    matchingCars.add(car);
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return matchingCars;
+    }
+    @Override
+    public List<CarDTO> getCarsByModelAndAddress(String model, String address) {
+        List<CarDTO> matchingCars = new ArrayList<>();
+        try {
+            List<CarDTO> allCars = getAllCars();
+            for (CarDTO car : allCars) {
+                if (car != null && car.getModel() != null && car.getModel().equalsIgnoreCase(model) &&
+                        car.getAddress() != null && car.getAddress().equalsIgnoreCase(address)) {
+                    matchingCars.add(car);
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return matchingCars;
+    }
+   @Override
+   public List<CarDTO> searchCarsByName(String searchTerm) {
+    List<CarDTO> matchingCars = new ArrayList<>();
+
+    try {
+        List<CarDTO> allCars = getAllCars();
+        for (CarDTO car : allCars) {
+            if (car != null && car.getName() != null && car.getName().toLowerCase().contains(searchTerm.toLowerCase())) {
+                matchingCars.add(car);
+            }
+        }
+    } catch (Exception e) {
+        e.printStackTrace();
+    }
+    return matchingCars;
+}
+    @Override
+    public List<CarDTO> searchCarsByModel(String searchTerm) {
+        List<CarDTO> matchingCars = new ArrayList<>();
+
+        try {
+            List<CarDTO> allCars = getAllCars();
+            for (CarDTO car : allCars) {
+                if (car != null && car.getModel() != null && car.getModel().toLowerCase().contains(searchTerm.toLowerCase())) {
+                    matchingCars.add(car);
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return matchingCars;
+    }
+
+    @Override
+    public List<CarDTO> searchCarsByModelAndAddress(String searchTermModel, String searchTermAddress) {
+        List<CarDTO> matchingCars = new ArrayList<>();
+
+        try {
+            List<CarDTO> allCars = getAllCars();
+            for (CarDTO car : allCars) {
+                if (car != null &&
+                        (car.getModel() != null && car.getModel().toLowerCase().contains(searchTermModel.toLowerCase()) ||
+                                car.getAddress() != null && car.getAddress().toLowerCase().contains(searchTermAddress.toLowerCase()))
+                ) {
+                    matchingCars.add(car);
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return matchingCars;
+    }
+    @Override
+    public List<CarDTO> searchCarsBySingleParameter(String searchTerm) {
+        List<CarDTO> matchingCars = new ArrayList<>();
+
+        try {
+            List<CarDTO> allCars = getAllCars();
+
+            for (CarDTO car : allCars) {
+                if (car != null) {
+                    if (searchTerm != null && !searchTerm.isEmpty()) {
+                        if (searchTerm.matches(".*\\d+.*")) {
+                            if (isSearchTermPriceValid(searchTerm, car.getPrice_per_day())) {
+                                matchingCars.add(car);
+                            }
+                        } else if (car.getModel() != null && car.getModel().toLowerCase().contains(searchTerm.toLowerCase())) {
+                            matchingCars.add(car);
+                        } else if (car.getAddress() != null && car.getAddress().toLowerCase().contains(searchTerm.toLowerCase())) {
+                            matchingCars.add(car);
+                        }
+                    }
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return matchingCars;
+    }
+    private boolean isSearchTermPriceValid(String searchTermPrice, Float carPrice) {
+        try {
+            Float price = new Float(searchTermPrice);
+            return carPrice.compareTo(price) == 0;
+        } catch (NumberFormatException e) {
+            return false;
+        }
+    }
+
+
+
+
 }

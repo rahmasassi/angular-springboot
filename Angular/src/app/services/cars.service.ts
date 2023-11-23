@@ -1,13 +1,16 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { BehaviorSubject, Observable, catchError, tap, throwError } from 'rxjs';
 import { Cars } from '../Models/cars';
 import { CarDTO } from '../Models/CarDTO';
 @Injectable({
   providedIn: 'root'
 })
 export class CarsService {
-  private apiUrl = 'http://localhost:8081/api/cars';
+  private searchResultsSubject: BehaviorSubject<any> = new BehaviorSubject([]);
+  public searchResults$: Observable<any> = this.searchResultsSubject.asObservable();
+  private apiUrl = 'http://localhost:8080/api/cars';
+  private searchResults: CarDTO[] = [];
 
 
   constructor(private http: HttpClient) { }
@@ -26,5 +29,8 @@ export class CarsService {
 
   getAllCars(): Observable<CarDTO[]> {
     return this.http.get<CarDTO[]>(`${this.apiUrl}/getAllCars`);
+  }
+  searchCars(searchTerm: string): Observable<CarDTO[]> {
+    return this.http.get<CarDTO[]>(`${this.apiUrl}/search?searchTerm=${searchTerm}`);
   }
 }
