@@ -3,7 +3,6 @@ pipeline {
 
     environment {
         SSH_USER = 'ec2-user'
-        EC2_HOST = 'ec2-50-16-248-154.compute-1.amazonaws.com'
     }
 
     tools{
@@ -53,35 +52,53 @@ pipeline {
             }
         }
 
+        stage('provision server') {
+            environment {
+                AWS_ACCESS_KEY_ID = credentials('jenkins_aws_access_key_id')
+                AWS_SECRET_ACCESS_KEY = credentials('jenkins_aws_secret_access_key') 
+                TF_VAR_env_prefix = 'test'
+            }
+            steps {
+                script {
+                    dir('terraform') {
+                        sh "terraform init"
+                        sh "terraform apply --auto-approve"
+                        EC2_PUBLIC_IP = sh (
+                            script: "terraform output ec2_public_ip"
+                            returnStdout: true
+                        ).trim()
+                    }
+                }
+            }
+        }
+
         stage('Connect to EC2') {
             steps {
                 sshagent(['ec2-server-key']) {
-                    sh "ssh -T -o StrictHostKeyChecking=no ${SSH_USER}@${EC2_HOST}"
+                    sh "ssh -T -o StrictHostKeyChecking=no ${SSH_USER}@${EC2_PUBLIC_IP}"
                 }
             }
         }
-        stage('Pull Docker image') {
+        stage('deploy') {
             steps {
-                sshagent(['ec2-server-key']) {
-                    sh "ssh ${SSH_USER}@${EC2_HOST} docker container rm -f springboot"
-                    sh "ssh ${SSH_USER}@${EC2_HOST} docker container rm -f angular"
-                    sh "ssh ${SSH_USER}@${EC2_HOST} docker rmi \$(docker images -a -q) >/dev/null 2>&1 || true"
-                    sh "ssh ${SSH_USER}@${EC2_HOST} docker pull  rahmasassi/springboot:latest"
-                    sh "ssh ${SSH_USER}@${EC2_HOST} docker pull  rahmasassi/angular:latest"
-                }
-            }
-        }
+                script {
+                    echo "waiting EC2 to initialize"
+                    sleep(time: 90, unit: "SECONDS")
 
+                    echo "${EC2_PUBLIC_IP}"
 
-       stage('Run Docker container') {
-            steps {
-                sshagent(['ec2-server-key']) {
-                    sh "ssh ${SSH_USER}@${EC2_HOST} docker network create my-network >/dev/null 2>&1 || true"
-                    sh "ssh ${SSH_USER}@${EC2_HOST} docker run --name springboot --network my-network --hostname springboot -d -p 8081:8081 rahmasassi/springboot:latest"
-                    sh "ssh ${SSH_USER}@${EC2_HOST} docker run --name angular --network my-network --hostname angular -d -p 4200:4200 rahmasassi/angular:latest"
+                    sshagent(['server-ssh-key']) {
+                        sh "ssh ${SSH_USER}@${EC2_PUBLIC_IP} docker container rm -f springboot"
+                        sh "ssh ${SSH_USER}@${EC2_PUBLIC_IP} docker container rm -f angular"
+                        sh "ssh ${SSH_USER}@${EC2_PUBLIC_IP} docker rmi \$(docker images -a -q) >/dev/null 2>&1 || true"
+                        sh "ssh ${SSH_USER}@${EC2_PUBLIC_IP} docker pull  rahmasassi/springboot:latest"
+                        sh "ssh ${SSH_USER}@${EC2_PUBLIC_IP} docker pull  rahmasassi/angular:latest"
+                        sh "ssh ${SSH_USER}@${EC2_PUBLIC_IP} docker network create my-network >/dev/null 2>&1 || true"
+                        sh "ssh ${SSH_USER}@${EC2_PUBLIC_IP} docker run --name springboot --network my-network --hostname springboot -d -p 8081:8081 rahmasassi/springboot:latest"
+                        sh "ssh ${SSH_USER}@${EC2_PUBLIC_IP} docker run --name angular --network my-network --hostname angular -d -p 4200:4200 rahmasassi/angular:latest"
+                    }
                 }
             }
         }
     }
-
 }
