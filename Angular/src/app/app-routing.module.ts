@@ -24,6 +24,7 @@ import { CalendarComponent } from './components/calendar/calendar.component';
 import { EditCarComponent } from './edit-car/edit-car.component';
 
 
+
 const routes: Routes = [
 
   {
@@ -106,10 +107,17 @@ const routes: Routes = [
         path: 'calendar',
         component:CalendarComponent
       },
+
+      { path: 'search/:keyword',
+       component: ListVoitureUserComponent },
+       
+      { path: 'search', component: ListVoitureUserComponent },
+
       {
         path: 'edit-car/:id',
         component:EditCarComponent
       },
+
     ],
   }
 ];

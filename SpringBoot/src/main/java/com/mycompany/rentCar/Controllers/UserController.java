@@ -21,34 +21,33 @@ public class UserController {
     {
         return userService.saveUser(user);
     }
-
     @GetMapping("/checkUsername")
     public boolean checkUsernameExists(@RequestParam String username) {
         return userService.checkUsernameExists(username);
     }
-
     @GetMapping("/checkUsernameAgency")
     public boolean checkUsernameExistsAgency(@RequestParam String username) {
         return userService.checkUsernameExistsAgency(username);
     }
-
-    @GetMapping("/getUserId/{username}")
-    public ResponseEntity<Long> getUserIdByUsername(@PathVariable String username) {
+    @GetMapping("/getUserId")
+    public ResponseEntity<Long> getUserIdByUsername(@RequestParam String username) {
         Long userId = userService.getUserIdByUsername(username);
 
         if (userId != null) {
+            System.out.println("Requête pour récupérer l'ID avec le nom d'utilisateur : " + userId);
             return ResponseEntity.ok(userId);
         } else {
             userId = userService.getAgencyIdByUsername(username);
+            System.out.println("Requête pour récupérer l'ID avec le nom d'utilisateur : " + userId);
 
             if (userId != null) {
+                System.out.println("Requête pour récupérer l'ID avec le nom d'utilisateur : " + userId);
                 return ResponseEntity.ok(userId);
             } else {
                 return ResponseEntity.notFound().build();
             }
         }
     }
-
     @DeleteMapping("/deleteAgency/{agencyId}")
     public ResponseEntity<String> deleteAgency(@PathVariable Long agencyId) {
         userService.deleteAgency(agencyId);

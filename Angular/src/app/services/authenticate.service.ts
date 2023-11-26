@@ -9,7 +9,7 @@ import { throwError } from 'rxjs';
 })
 export class AuthenticateService {
 
-  private apiUrl = 'http://localhost:8081/api';
+  private apiUrl = 'http://localhost:8080/api';
   
   constructor(private http: HttpClient) {
   }
@@ -94,12 +94,19 @@ export class AuthenticateService {
   }
 
   getUserIdFromUsername(username: string): Observable<any> {
-    return this.http.get(`${this.apiUrl}/getUserId?username=${username}`);
+    return this.http.get(`${this.apiUrl}/user/getUserId?username=${username}`);
   }
 
   getUserIdByUsername(username: string): Observable<number> {
     const url = `${this.apiUrl}/user/getUserId/${username}`;
     return this.http.get<number>(url);
+  }
+
+  getCurrentUsername(): string {
+    // Vous devez implémenter la logique pour récupérer le nom d'utilisateur actuellement connecté.
+    // Cela dépend de la façon dont vous stockez le nom d'utilisateur après la connexion.
+    // Si vous avez stocké le nom d'utilisateur dans le localStorage, vous pouvez le récupérer comme ceci :
+    return localStorage.getItem('username') || ''; // Assurez-vous d'ajuster la clé selon votre implémentation.
   }
 
 }

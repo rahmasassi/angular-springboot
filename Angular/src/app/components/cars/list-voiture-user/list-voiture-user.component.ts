@@ -1,8 +1,9 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { CarsService } from 'src/app/services/cars.service';
 import { CarDTO } from 'src/app/Models/CarDTO';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ca } from 'date-fns/locale';
+
 
 @Component({
   selector: 'app-list-voiture-user',
@@ -12,24 +13,51 @@ import { ca } from 'date-fns/locale';
 export class ListVoitureUserComponent implements OnInit {
   @Input() car!: CarDTO;
   cars: CarDTO[] = [];
-
-  constructor(private carService: CarsService, private router: Router) { }
-
+  searchResults: CarDTO[] = [];
+  showSearchResults: boolean = false;
+  constructor(private carService: CarsService, private route: ActivatedRoute, private router : Router) {}
   ngOnInit(): void {
+    // Récupérez tous les véhicules à partir du service lors de l'initialisation
+    this.route.paramMap.subscribe(()=>{
+      this.listCars();
+    });
+    
+  }
+  listCars(){
+    this.showSearchResults = this.route.snapshot.paramMap.has('keyword');
+    if (this.showSearchResults){
+      this.searchCars();
+    }
+    else{
+      this.getAllCars();
+    }
+    
+  }
+  searchCars(){
+    const theKeyword: string | null = this.route.snapshot.paramMap.get('keyword');
+
+    if (theKeyword !== null) {
+      this.carService.searchCars(theKeyword).subscribe((data: CarDTO[]) => {
+        this.cars = data;
+        
+      });
+    } else {
+      console.log("null")
+      
+    }
+  }
+  getAllCars(): void {
     this.carService.getAllCars().subscribe((data: CarDTO[]) => {
       this.cars = data;
-  });
-}
-
-getImageUrl(car: CarDTO): string {
-  if (car.imageData) {
-    const base64Image = 'data:image/' + car.fileType + ';base64,' + car.imageData;
-    return base64Image;
+    });
   }
-  return '';
-}
-
-
+  getImageUrl(car: CarDTO): string {
+    if (car.imageData) {
+      const base64Image = 'data:image/' + car.fileType + ';base64,' + car.imageData;
+      return base64Image;
+    }
+    return '';
+  }
   deleteCar(car: CarDTO): void {
     if (car && car.id) {
       this.carService.delete(car.id).subscribe(
@@ -62,6 +90,5 @@ getImageUrl(car: CarDTO): string {
       console.error('Invalid car data for reserving.', car);
     }
   }
-
 }
 

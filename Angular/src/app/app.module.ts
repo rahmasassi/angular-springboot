@@ -31,6 +31,8 @@ import { CalendarComponent } from './components/calendar/calendar.component';
 import { MatNativeDateModule } from '@angular/material/core';
 
 
+
+
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { faSearch, faInfoCircle, faExclamationTriangle, faWarning } from '@fortawesome/free-solid-svg-icons';
 import { ButtonDetailsEditComponent } from './components/button-details-edit/button-details-edit.component';
@@ -38,6 +40,10 @@ import { ButtonAddDeleteComponent } from './components/button-add-delete/button-
 import { ListAgenceComponent } from './components/agency/list-agence/list-agence.component';
 import { ListReclamationComponent } from './components/reclamation/list-reclamation/list-reclamation.component';
 import { ListClientComponent } from './components/client/list-client/list-client.component';
+import { SearchCarsComponent } from './search-cars/search-cars.component';
+import { MatButtonModule } from '@angular/material/button';
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatIconModule } from '@angular/material/icon';
 import { EditCarComponent } from './edit-car/edit-car.component';
 import { ButtonReserveComponent } from './components/button-reserve/button-reserve.component';
 @NgModule({
@@ -47,15 +53,12 @@ import { ButtonReserveComponent } from './components/button-reserve/button-reser
     HomeComponent,
     FooterComponent,
     DashboardComponent,
-
     SingupUserComponent,
     LoginComponent,
     DetailCarComponent,
     SingupAgencyComponent,
     DetailReservationComponent,
     ConditionComponent,
-
-
     ListReservationAgenceComponent,
     ListReservationClientComponent,
     ListVoitureUserComponent,
@@ -65,13 +68,14 @@ import { ButtonReserveComponent } from './components/button-reserve/button-reser
     ListAgenceComponent,
     ListReclamationComponent,
     ListClientComponent,
-
     AddCarComponent,
     AddReclamationComponent,
     AddReservationComponent,
     CalendarComponent,
+    SearchCarsComponent,
     EditCarComponent,
     ButtonReserveComponent,
+
 
 
   ],
@@ -85,6 +89,9 @@ import { ButtonReserveComponent } from './components/button-reserve/button-reser
     MatNativeDateModule,
     FormsModule,
     HttpClientModule,
+    MatButtonModule,
+    MatDialogModule,
+    MatIconModule,
     ReactiveFormsModule,
   ],
   providers: [],

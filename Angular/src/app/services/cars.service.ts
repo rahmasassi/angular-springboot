@@ -1,19 +1,28 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
-import { Observable, catchError, map, throwError } from 'rxjs';
+import { BehaviorSubject, Observable, catchError, tap ,map } from 'rxjs';
 import { Cars } from '../Models/cars';
 import { CarDTO } from '../Models/CarDTO';
+import { ApiResponse } from '../Models/ApiResponse';
 @Injectable({
   providedIn: 'root'
 })
 export class CarsService {
-  private apiUrl = 'http://localhost:8081/api/cars';
+  private searchResultsSubject: BehaviorSubject<any> = new BehaviorSubject([]);
+  public searchResults$: Observable<any> = this.searchResultsSubject.asObservable();
+  private apiUrl = 'http://localhost:8080/api/cars';
+  private searchResults: CarDTO[] = [];
 
 
   constructor(private http: HttpClient) { }
 
-  addCarWithImage(carData: FormData): Observable<any> {
-    return this.http.post(`${this.apiUrl}/addCar`, carData);
+  // addCarWithImage(carData: FormData): Observable<any> {
+  //   return this.http.post(`${this.apiUrl}/addCar`, carData);
+  // }
+  addCarWithImage(formData: FormData, userId: number): Observable<ApiResponse> {
+    const headers = new HttpHeaders().set('Authorization', `Bearer ${localStorage.getItem('token')}`);
+    
+    return this.http.post<ApiResponse>(`${this.apiUrl}/addCar?userId=${userId}`, formData, { headers });
   }
 
   getCarById(carId: number): Observable<CarDTO> {
@@ -33,6 +42,8 @@ export class CarsService {
     return this.http.get<CarDTO[]>(`${this.apiUrl}/getAllCars`);
   }
 
+  searchCars(searchTerm: string): Observable<CarDTO[]> {
+    return this.http.get<CarDTO[]>(`${this.apiUrl}/search?searchTerm=${searchTerm}`);}
   delete(carId: number): Observable<void> {
     const url = `${this.apiUrl}/delete/${carId}`;
     return this.http.delete(url, { responseType: 'text' }).pipe(
