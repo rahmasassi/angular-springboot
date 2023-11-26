@@ -75,7 +75,7 @@ pipeline {
 
         stage('Connect to EC2') {
             steps {
-                sshagent(['ec2-server-key']) {
+                sshagent(['server-ssh-key']) {
                     sh "ssh -T -o StrictHostKeyChecking=no ${SSH_USER}@${EC2_PUBLIC_IP}"
                 }
             }
