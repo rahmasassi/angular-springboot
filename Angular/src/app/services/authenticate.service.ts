@@ -3,6 +3,10 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { catchError, switchMap, tap } from 'rxjs/operators';
 import { throwError } from 'rxjs';
+// import { JwtHelperService } from '@auth0/angular-jwt';
+
+
+
 
 @Injectable({
   providedIn: 'root'
@@ -98,15 +102,17 @@ export class AuthenticateService {
   }
 
   getUserIdByUsername(username: string): Observable<number> {
-    const url = `${this.apiUrl}/user/getUserId/${username}`;
+    const url = `${this.apiUrl}/user/getUserId/`;
     return this.http.get<number>(url);
   }
 
-  getCurrentUsername(): string {
-    // Vous devez implémenter la logique pour récupérer le nom d'utilisateur actuellement connecté.
-    // Cela dépend de la façon dont vous stockez le nom d'utilisateur après la connexion.
-    // Si vous avez stocké le nom d'utilisateur dans le localStorage, vous pouvez le récupérer comme ceci :
-    return localStorage.getItem('username') || ''; // Assurez-vous d'ajuster la clé selon votre implémentation.
+  getCurrentUserId(): number {
+    const userIdString = localStorage.getItem('userId');
+    const userId = userIdString ? parseInt(userIdString, 10) : 0; // Assurez-vous que c'est le bon type de conversion.
+    console.log('Current User ID:', userId);
+    return userId;
   }
+
+  
 
 }

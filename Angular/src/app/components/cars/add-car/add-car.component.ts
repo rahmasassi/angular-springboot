@@ -15,12 +15,9 @@ export class AddCarComponent {
     private router: Router,
     private authService: AuthenticateService
   ) { }
-
   car: Cars = new Cars();
-
   onSubmit() {
     const formData = new FormData();
-
     if (this.car.model) {
       formData.append('model', this.car.model);
     } else {
@@ -35,32 +32,21 @@ export class AddCarComponent {
     formData.append('registration_num', this.car.registration_num || '');
     formData.append('gearbox', this.car.gearbox || '');
     formData.append('nb_places', this.car.nb_places?.toString() || '');
-
-    // Récupérer le nom d'utilisateur de l'utilisateur actuellement connecté
-    const currentUsername = this.authService.getCurrentUsername();
-
-    // Utiliser le nom d'utilisateur pour récupérer l'ID de l'utilisateur
-    this.authService.getUserIdByUsername(loginData.username).subscribe(
-      (userId) => {
-        this.carsService.addCarWithImage(formData, userId).subscribe(
-          (response) => {
-            console.log('Réponse du backend :', response);
-            if (response.id) {
-              this.router.navigate(['/list-voiture-user']);
-            }
-            console.log('ID de l\'utilisateur actuel :', userId);
-          },
-          (error) => {
-            console.error('Erreur lors de l\'envoi des données au backend :', error);
-          }
-        );
-      },
-      (error) => {
-        console.error('Erreur lors de la récupération de l\'ID de l\'utilisateur :', error);
+    const currentUserId = this.authService.getCurrentUserId();
+    formData.append('userId', currentUserId.toString());
+    this.carsService.addCarWithImage(formData, currentUserId).subscribe(
+    (response) => {
+      console.log('Réponse du backend :', response);
+      if (response.id) {
+        this.router.navigate(['/list-voiture-user']);
       }
-    );
+      console.log('ID de l\'utilisateur actuel :', currentUserId);
+    },
+    (error) => {
+      console.error('Erreur lors de l\'envoi des données au backend :', error);
+    }
+  );
   }
-
   onFileSelected(event: any) {
     if (event.target.files.length > 0) {
       this.car.photo = event.target.files[0] as File;

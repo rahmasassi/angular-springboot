@@ -15,20 +15,13 @@ export class CarsService {
 
 
   constructor(private http: HttpClient) { }
-
-  // addCarWithImage(carData: FormData): Observable<any> {
-  //   return this.http.post(`${this.apiUrl}/addCar`, carData);
-  // }
   addCarWithImage(formData: FormData, userId: number): Observable<ApiResponse> {
-    const headers = new HttpHeaders().set('Authorization', `Bearer ${localStorage.getItem('token')}`);
-    
+    const headers = new HttpHeaders();
     return this.http.post<ApiResponse>(`${this.apiUrl}/addCar?userId=${userId}`, formData, { headers });
   }
-
   getCarById(carId: number): Observable<CarDTO> {
     return this.http.get<CarDTO>(`${this.apiUrl}/getCarById/${carId}`);
   }
-
   updateCar(carId: number, formData: FormData): Observable<any> {
     const headers = new HttpHeaders({
       'enctype': 'multipart/form-data'
