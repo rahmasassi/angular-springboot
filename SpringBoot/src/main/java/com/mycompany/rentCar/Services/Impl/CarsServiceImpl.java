@@ -19,21 +19,10 @@ public class CarsServiceImpl implements CarsService {
     private final CarsRepository carsRepository;
     private final ImageService imageService;
 
-//    @Override
-//    public Cars addCar(Cars car) {
-//        return carsRepository.save(car);
-//    }
     @Override
     public Cars addCar(Cars car, Long userId) {
-        // Assurez-vous que l'ID de l'utilisateur est correctement défini pour la voiture
         car.setUserId(userId);
-
-        // Ajoutez la logique pour sauvegarder la voiture dans la base de données
         Cars savedCar = carsRepository.save(car);
-
-        // Ajoutez la logique pour sauvegarder l'image dans la base de données
-        // Utilisez votre service ImageService ici...
-
         return savedCar;
     }
 
