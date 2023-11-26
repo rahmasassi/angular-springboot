@@ -56,14 +56,10 @@ pipeline {
             environment {
                 AWS_ACCESS_KEY_ID = credentials('jenkins_aws_access_key_id')
                 AWS_SECRET_ACCESS_KEY = credentials('jenkins_aws_secret_access_key') 
-                AWS_ACCESS_TOKEN = credentials('jenkins_aws_access_token')
+                AWS_SESSION_TOKEN = credentials('jenkins_aws_access_token')
                 TF_VAR_env_prefix = 'test'
             }
             steps {
-                echo "AWS_ACCESS_KEY_ID: ${AWS_ACCESS_KEY_ID}"
-                echo "AWS_SECRET_ACCESS_KEY: ${AWS_SECRET_ACCESS_KEY}"
-                echo "AWS_ACCESS_TOKEN: ${AWS_ACCESS_TOKEN}"
-
                 script {
                     dir('terraform') {
                         sh "terraform init"
