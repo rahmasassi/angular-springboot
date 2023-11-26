@@ -5,12 +5,15 @@ import com.mycompany.rentCar.CarDTO.CarDTO;
 import com.mycompany.rentCar.Entities.Cars;
 import com.mycompany.rentCar.Entities.Image;
 import com.mycompany.rentCar.Services.CarsService;
+import com.mycompany.rentCar.Services.UserService;
 import com.mycompany.rentCar.Services.ImageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 
 import javax.persistence.NoResultException;
 import java.util.ArrayList;
@@ -21,38 +24,145 @@ import java.util.List;
 @RequestMapping("/api/cars")
 public class CarsController {
     private final CarsService carsService;
+    private final UserService userService;
     private final ImageService imageService;
 
     @Autowired
-    public CarsController(CarsService carsService, ImageService imageService) {
+    public CarsController(CarsService carsService, ImageService imageService,UserService userService) {
         this.carsService = carsService;
         this.imageService = imageService;
+        this.userService = userService;
     }
-    @PostMapping("/addCar")
-    public ResponseEntity<ApiResponse> addCarWithImage(
-            @RequestParam("file") MultipartFile file,
-            @ModelAttribute Cars car
+//    @PostMapping("/addCar")
+//    public ResponseEntity<ApiResponse> addCarWithImage(
+//            @RequestParam("file") MultipartFile file,
+//            @ModelAttribute Cars car
+//    ) {
+//        try {
+//            Cars savedCar = carsService.addCar(car);
+//            Image addedImage = imageService.addImage(file, savedCar.getId());
+//           // return ResponseEntity.ok("Voiture ajoutée avec succès avec l'ID : " + savedCar.getId());
+//            ApiResponse response = new ApiResponse("Voiture ajoutée avec succès avec l'ID : " + savedCar.getId(), savedCar.getId());
+//            return ResponseEntity.ok(response);
+//        }  catch (Exception e) {
+//            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+//                    .body(new ApiResponse("Erreur lors de l'ajout de la voiture : " + e.getMessage(), null));
+//        }
+//    }
+
+//    @PutMapping("/update/{carId}")
+//    public ResponseEntity<String> update(
+//            @PathVariable Long carId,
+//            @ModelAttribute Cars updatedCar,
+//            @RequestParam("file") MultipartFile newImage
+//@PostMapping("/addCar")
+//public ResponseEntity<ApiResponse> addCarWithImage(
+//        @RequestParam("file") MultipartFile file,
+//        @ModelAttribute Cars car
+//) {
+//    try {
+//        // Récupérer l'ID de l'utilisateur connecté depuis le contexte de sécurité
+//        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+//        String currentUsername = authentication.getName();
+//        Long currentUserId = userService.getUserIdByUsername(currentUsername);
+//
+//        // Assurez-vous que l'ID de l'utilisateur est correctement défini pour la voiture
+//        car.setUserId(currentUserId);
+//
+//        Cars savedCar = carsService.addCar(car);
+//        Image addedImage = imageService.addImage(file, savedCar.getId());
+//
+//        ApiResponse response = new ApiResponse("Voiture ajoutée avec succès avec l'ID : " + savedCar.getId(), savedCar.getId());
+//        return ResponseEntity.ok(response);
+//    }  catch (Exception e) {
+//        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+//                .body(new ApiResponse("Erreur lors de l'ajout de la voiture : " + e.getMessage(), null));
+//    }
+//}
+//
+//@PostMapping("/addCar")
+//public ResponseEntity<ApiResponse> addCarWithImage(
+//        @RequestParam("file") MultipartFile file,
+//        @ModelAttribute Cars car
+//) {
+//    try {
+//        // Récupérer l'ID de l'utilisateur connecté depuis le contexte de sécurité
+//        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+//        String currentUsername = authentication.getName();
+//        Long currentUserId = userService.getUserIdByUsername(currentUsername);
+//
+//        // Assurez-vous que l'ID de l'utilisateur est correctement défini pour la voiture
+//        if (currentUserId != null) {
+//            car.setUserId(currentUserId);
+//
+//            Cars savedCar = carsService.addCar(car);
+//            Image addedImage = imageService.addImage(file, savedCar.getId());
+//
+//            ApiResponse response = new ApiResponse("Voiture ajoutée avec succès avec l'ID : " + savedCar.getId(), savedCar.getId());
+//            return ResponseEntity.ok(response);
+//        } else {
+//            // Gérer le cas où l'ID de l'utilisateur est null (peut-être lever une exception ou prendre une action appropriée)
+//            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+//                    .body(new ApiResponse("Erreur lors de l'ajout de la voiture : ID de l'utilisateur null", null));
+//        }
+//    }  catch (Exception e) {
+//        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+//                .body(new ApiResponse("Erreur lors de l'ajout de la voiture : " + e.getMessage(), null));
+//    }
+//}
+@PostMapping("/addCar")
+public ResponseEntity<ApiResponse> addCarWithUserId(
+        @RequestParam("file") MultipartFile file,
+        @ModelAttribute Cars car,
+        @RequestParam("userId") Long userId) {
+    try {
+        // Assurez-vous que l'ID de l'utilisateur est correctement défini pour la voiture
+        car.setUserId(userId);
+
+        Cars savedCar = carsService.addCar(car, userId); // Appel modifié pour inclure userId
+        Image addedImage = imageService.addImage(file, savedCar.getId());
+
+        ApiResponse response = new ApiResponse("Voiture ajoutée avec succès avec l'ID : " + savedCar.getId(), savedCar.getId());
+        return ResponseEntity.ok(response);
+    } catch (Exception e) {
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                .body(new ApiResponse("Erreur lors de l'ajout de la voiture : " + e.getMessage(), null));
+    }
+}
+
+
+
+    @PutMapping("/updateCar/{carId}")
+    public ResponseEntity<String> updateCar(
+            @PathVariable("carId") long carId,
+            @RequestParam(value = "file", required = false) MultipartFile file,
+            @ModelAttribute Cars updatedCar
     ) {
         try {
-            Cars savedCar = carsService.addCar(car);
-            Image addedImage = imageService.addImage(file, savedCar.getId());
-           // return ResponseEntity.ok("Voiture ajoutée avec succès avec l'ID : " + savedCar.getId());
-            ApiResponse response = new ApiResponse("Voiture ajoutée avec succès avec l'ID : " + savedCar.getId(), savedCar.getId());
-            return ResponseEntity.ok(response);
-        }  catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                    .body(new ApiResponse("Erreur lors de l'ajout de la voiture : " + e.getMessage(), null));
-        }
-    }
-    @PutMapping("/update/{carId}")
-    public ResponseEntity<String> update(
-            @PathVariable Long carId,
-            @ModelAttribute Cars updatedCar,
-            @RequestParam("file") MultipartFile newImage
-    ) {
-        try {
-            Cars update = carsService.updatecar(carId, updatedCar, newImage);
-            return ResponseEntity.ok("Voiture mise à jour avec succès avec l'ID : " + update.getId());
+            Cars existingCar = carsService.getCarById(carId);
+            if (existingCar == null) {
+                return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                        .body("La voiture avec l'ID " + carId + " n'a pas été trouvée");
+            }
+
+            existingCar.setName(updatedCar.getName());
+            existingCar.setModel(updatedCar.getModel());
+            existingCar.setNb_doors(updatedCar.getNb_doors());
+            existingCar.setNb_places(updatedCar.getNb_places());
+            existingCar.setAddress(updatedCar.getAddress());
+            existingCar.setDescription(updatedCar.getDescription());
+            existingCar.setPrice_per_day(updatedCar.getPrice_per_day());
+            existingCar.setRegistration_num(updatedCar.getRegistration_num());
+            existingCar.setGearbox(updatedCar.getGearbox());
+
+            if (file != null && !file.isEmpty()) {
+                Image updatedImage = imageService.updateImage(file, carId);
+                existingCar.setImage(updatedImage);
+            }
+
+            carsService.updateCar(existingCar);
+
+            return ResponseEntity.ok("Voiture mise à jour avec succès avec l'ID : " + existingCar.getId());
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                     .body("Erreur lors de la mise à jour de la voiture : " + e.getMessage());
@@ -62,7 +172,7 @@ public class CarsController {
     public ResponseEntity<List<CarDTO>> getAllCars() {
         try {
             List<CarDTO> carsWithImages = carsService.getAllCars();
-            System.out.println("carsWithImages");
+
             return ResponseEntity.ok(carsWithImages);
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
@@ -217,6 +327,14 @@ public class CarsController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
         }
     }
-
-
+    @DeleteMapping("/delete/{carId}")
+    public ResponseEntity<String> deleteCar(@PathVariable Long carId) {
+        try {
+            carsService.deleteCar(carId);
+            return ResponseEntity.ok("Voiture supprimée avec succès avec l'ID : " + carId);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body("Erreur lors de la suppression de la voiture : " + e.getMessage());
+        }
+    }
 }

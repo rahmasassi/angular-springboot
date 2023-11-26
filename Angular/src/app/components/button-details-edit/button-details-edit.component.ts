@@ -1,10 +1,19 @@
-import { Component } from '@angular/core';
+import { Component, EventEmitter, Output } from '@angular/core';
+import { CarsService } from 'src/app/services/cars.service';
 
 @Component({
   selector: 'app-button-details-edit',
-  templateUrl: './button-details-edit.component.html',
+  template: '<button (click)="onEdit()">edit</button>',
   styleUrls: ['./button-details-edit.component.css']
 })
 export class ButtonDetailsEditComponent {
 
+  constructor(private carsService: CarsService) { }
+
+  
+  @Output() editClicked = new EventEmitter<void>();
+
+  onEdit(): void {
+    this.editClicked.emit();
+  }
 }

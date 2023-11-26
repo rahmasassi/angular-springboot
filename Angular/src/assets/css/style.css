@@ -8889,7 +8889,7 @@ h1, h2, h3, h4, h5,
           margin: 0 auto;
           z-index: 1; }
       .table .thead-primary tr th.bg-black:after {
-        border-color: #000000 transparent transparent transparent; }
+        border-color: #000000 transparent transparent transparent;}
       .table .thead-primary tr th.bg-dark:after {
         border-color: #343a40 transparent transparent transparent; }
   .table tbody tr td {

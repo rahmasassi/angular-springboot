@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { BehaviorSubject, Observable, catchError, tap, throwError } from 'rxjs';
+import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
+import { BehaviorSubject, Observable, catchError, tap ,map } from 'rxjs';
 import { Cars } from '../Models/cars';
 import { CarDTO } from '../Models/CarDTO';
+import { ApiResponse } from '../Models/ApiResponse';
 @Injectable({
   providedIn: 'root'
 })
@@ -15,22 +16,45 @@ export class CarsService {
 
   constructor(private http: HttpClient) { }
 
-  addCarWithImage(carData: FormData): Observable<any> {
-    return this.http.post(`${this.apiUrl}/addCar`, carData);
+  // addCarWithImage(carData: FormData): Observable<any> {
+  //   return this.http.post(`${this.apiUrl}/addCar`, carData);
+  // }
+  addCarWithImage(formData: FormData, userId: number): Observable<ApiResponse> {
+    const headers = new HttpHeaders().set('Authorization', `Bearer ${localStorage.getItem('token')}`);
+    
+    return this.http.post<ApiResponse>(`${this.apiUrl}/addCar?userId=${userId}`, formData, { headers });
   }
 
-  getCarById(carId: number): Observable<Cars> {
-    return this.http.get<Cars>(`${this.apiUrl}/getCarById/${carId}`);
+  getCarById(carId: number): Observable<CarDTO> {
+    return this.http.get<CarDTO>(`${this.apiUrl}/getCarById/${carId}`);
   }
 
-  updateStudent(carId: number, value: any): Observable<Object> {
-    return this.http.post(`${this.apiUrl}/update/${carId}`, value);
+  updateCar(carId: number, formData: FormData): Observable<any> {
+    const headers = new HttpHeaders({
+      'enctype': 'multipart/form-data'
+    });
+  
+    return this.http.put(`${this.apiUrl}/updateCar/${carId}`, formData, { headers });
   }
+  
 
   getAllCars(): Observable<CarDTO[]> {
     return this.http.get<CarDTO[]>(`${this.apiUrl}/getAllCars`);
   }
+
   searchCars(searchTerm: string): Observable<CarDTO[]> {
-    return this.http.get<CarDTO[]>(`${this.apiUrl}/search?searchTerm=${searchTerm}`);
+    return this.http.get<CarDTO[]>(`${this.apiUrl}/search?searchTerm=${searchTerm}`);}
+  delete(carId: number): Observable<void> {
+    const url = `${this.apiUrl}/delete/${carId}`;
+    return this.http.delete(url, { responseType: 'text' }).pipe(
+      catchError((error: any) => {
+        console.error('Error deleting car:', error);
+        throw error; 
+      }),
+      map((response: any) => {
+        console.log(response); 
+        return; 
+      })
+    );
   }
 }

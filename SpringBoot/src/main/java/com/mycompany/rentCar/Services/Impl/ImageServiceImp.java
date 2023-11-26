@@ -34,10 +34,33 @@ public class ImageServiceImp implements ImageService{
         img.setCars(car);
         return imageRepository.save(img);
     }
+    @Override
+    public Image updateImage(MultipartFile image, Long carId) throws IOException {
+        // Récupérer la voiture associée à l'ID
+        Cars car = carsRepository.findById(carId)
+                .orElseThrow(() -> new EntityNotFoundException("La voiture avec l'ID " + carId + " n'a pas été trouvée"));
 
+        // Récupérer l'image existante liée à la voiture
+        Image existingImage = car.getImage();
 
+        if (existingImage == null) {
+            // Si aucune image n'existe, ajouter une nouvelle image
+            return addImage(image, carId);
+        } else {
+            // Si une image existe, mettre à jour ses propriétés
+            String fileName = StringUtils.cleanPath(Objects.requireNonNull(image.getOriginalFilename()));
+            String fileType = image.getContentType();
+            byte[] data = image.getBytes();
 
+            // Mettre à jour les propriétés de l'image existante
+            existingImage.setFileName(fileName);
+            existingImage.setFileType(fileType);
+            existingImage.setData(data);
+
+            // Enregistrer les modifications de l'image
+            return imageRepository.save(existingImage);
+        }
+    }
 }
-
 
 

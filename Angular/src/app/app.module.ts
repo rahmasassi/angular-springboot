@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -44,7 +44,8 @@ import { SearchCarsComponent } from './search-cars/search-cars.component';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
-
+import { EditCarComponent } from './edit-car/edit-car.component';
+import { ButtonReserveComponent } from './components/button-reserve/button-reserve.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -52,15 +53,12 @@ import { MatIconModule } from '@angular/material/icon';
     HomeComponent,
     FooterComponent,
     DashboardComponent,
-
     SingupUserComponent,
     LoginComponent,
     DetailCarComponent,
     SingupAgencyComponent,
     DetailReservationComponent,
     ConditionComponent,
-
-
     ListReservationAgenceComponent,
     ListReservationClientComponent,
     ListVoitureUserComponent,
@@ -70,15 +68,14 @@ import { MatIconModule } from '@angular/material/icon';
     ListAgenceComponent,
     ListReclamationComponent,
     ListClientComponent,
-
     AddCarComponent,
     AddReclamationComponent,
     AddReservationComponent,
     CalendarComponent,
     SearchCarsComponent,
+    EditCarComponent,
+    ButtonReserveComponent,
 
-
-    
 
 
   ],
@@ -95,6 +92,7 @@ import { MatIconModule } from '@angular/material/icon';
     MatButtonModule,
     MatDialogModule,
     MatIconModule,
+    ReactiveFormsModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

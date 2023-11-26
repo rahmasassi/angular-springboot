@@ -14,6 +14,7 @@ export class Cars {
   image?: Image;
   registration_num?: string;
   gearbox?: string;
+  userId?:number;
 }
 
 
