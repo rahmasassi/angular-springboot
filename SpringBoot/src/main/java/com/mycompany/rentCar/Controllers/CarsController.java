@@ -17,6 +17,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 
 import javax.persistence.NoResultException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 @CrossOrigin(origins = "http://localhost:4200")
@@ -84,17 +85,24 @@ public ResponseEntity<ApiResponse> addCarWithUserId(
                     .body("Erreur lors de la mise à jour de la voiture : " + e.getMessage());
         }
     }
-     @GetMapping("/getAllCars")
+    @GetMapping("/getAllCars")
     public ResponseEntity<List<CarDTO>> getAllCars() {
         try {
             List<CarDTO> carsWithImages = carsService.getAllCars();
-
             return ResponseEntity.ok(carsWithImages);
         } catch (Exception e) {
+            // Loggez l'exception pour avoir plus d'informations
+            e.printStackTrace();
+
+            // Vous pouvez également loguer le message de l'exception
+            // logger.error("Erreur lors de la récupération des voitures: " + e.getMessage());
+
+            // Renvoyez une réponse avec un message d'erreur plus informatif
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                    .body(null);
+                    .body(Collections.emptyList()); // ou null, selon vos préférences
         }
     }
+
     @GetMapping("/getCarById/{carId}")
     public ResponseEntity<CarDTO> getCarById(@PathVariable Long carId) {
         try {

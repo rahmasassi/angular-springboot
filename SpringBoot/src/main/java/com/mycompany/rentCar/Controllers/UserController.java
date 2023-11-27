@@ -29,8 +29,8 @@ public class UserController {
     public boolean checkUsernameExistsAgency(@RequestParam String username) {
         return userService.checkUsernameExistsAgency(username);
     }
-    @GetMapping("/getUserId")
-    public ResponseEntity<Long> getUserIdByUsername(@RequestParam String username) {
+    @GetMapping("/getUserId/{username}")
+    public ResponseEntity<Long> getUserIdByUsername(@PathVariable String username) {
         Long userId = userService.getUserIdByUsername(username);
 
         if (userId != null) {

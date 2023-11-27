@@ -25,8 +25,8 @@ public class CarDTO {
     private long imageId;
     private String imageName;
     private String imageFileType;
-    @Column(name = "userid", nullable = true)
-    private long userId;
+//    @Column(name = "userid", nullable = true)
+    private Long userId;
 
     private byte[] imageData;
     public CarDTO(Cars car) {
