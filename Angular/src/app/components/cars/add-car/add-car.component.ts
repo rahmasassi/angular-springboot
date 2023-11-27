@@ -32,6 +32,7 @@ export class AddCarComponent {
     formData.append('registration_num', this.car.registration_num || '');
     formData.append('gearbox', this.car.gearbox || '');
     formData.append('nb_places', this.car.nb_places?.toString() || '');
+
     const currentUserId = this.authService.getCurrentUserId();
     formData.append('userId', currentUserId.toString());
     this.carsService.addCarWithImage(formData, currentUserId).subscribe(
@@ -39,6 +40,30 @@ export class AddCarComponent {
       console.log('Réponse du backend :', response);
       if (response.id) {
         this.router.navigate(['/list-voiture-user']);
+
+
+    // Récupérer le nom d'utilisateur de l'utilisateur actuellement connecté
+    const currentUsername = this.authService.getCurrentUsername();
+
+    // Utiliser le nom d'utilisateur pour récupérer l'ID de l'utilisateur
+    this.authService.getUserIdByUsername(currentUsername).subscribe(
+      (userId) => {
+        this.carsService.addCarWithImage(formData, userId).subscribe(
+          (response) => {
+            console.log('Réponse du backend :', response);
+            if (response.id) {
+              this.router.navigate(['/list-voiture-user']);
+            }
+            console.log('ID de l\'utilisateur actuel :', userId);
+          },
+          (error) => {
+            console.error('Erreur lors de l\'envoi des données au backend :', error);
+          }
+        );
+      },
+      (error) => {
+        console.error('Erreur lors de la récupération de l\'ID de l\'utilisateur :', error);
+
       }
       console.log('ID de l\'utilisateur actuel :', currentUserId);
     },
