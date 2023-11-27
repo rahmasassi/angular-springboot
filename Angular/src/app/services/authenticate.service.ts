@@ -98,11 +98,11 @@ export class AuthenticateService {
   }
 
   getUserIdFromUsername(username: string): Observable<any> {
-    return this.http.get(`${this.apiUrl}/user/getUserId?username=${username}`);
+    return this.http.get(`${this.apiUrl}/getUserId?username=${username}`);
   }
 
   getUserIdByUsername(username: string): Observable<number> {
-    const url = `${this.apiUrl}/user/getUserId/`;
+    const url = `${this.apiUrl}/user/getUserId/${username}`;
     return this.http.get<number>(url);
   }
 
