@@ -40,7 +40,7 @@ export class AddCarComponent {
     const currentUsername = this.authService.getCurrentUsername();
 
     // Utiliser le nom d'utilisateur pour récupérer l'ID de l'utilisateur
-    this.authService.getUserIdByUsername(loginData.username).subscribe(
+    this.authService.getUserIdByUsername(currentUsername).subscribe(
       (userId) => {
         this.carsService.addCarWithImage(formData, userId).subscribe(
           (response) => {
