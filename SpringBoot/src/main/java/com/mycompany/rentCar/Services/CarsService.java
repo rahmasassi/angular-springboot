@@ -2,6 +2,7 @@ package com.mycompany.rentCar.Services;
 
 import com.mycompany.rentCar.CarDTO.CarDTO;
 import com.mycompany.rentCar.Entities.Cars;
+import com.mycompany.rentCar.Entities.Reservation;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
@@ -9,8 +10,11 @@ import java.util.List;
 
 
 public interface CarsService {
-    Cars addCar(Cars car);
-    Cars updatecar(Long carId, Cars updatedCar, MultipartFile newImage) throws IOException;
+    Cars addCar(Cars car,Long userId);
+
+//    Cars addCarWithUserId(Cars car, Long userId);
+
+    Cars updateCar(Cars car);
     List<CarDTO> getAllCars();
     Cars getCarById(Long carId);
     List<CarDTO> getCarsByName(String name);
@@ -21,4 +25,6 @@ public interface CarsService {
     List<CarDTO> searchCarsByModel(String searchTerm);
     List<CarDTO> searchCarsByModelAndAddress(String searchTermModel, String searchTermAddress);
     List<CarDTO> searchCarsBySingleParameter(String searchTerm);
+    void deleteCar(Long carId);
+    //List<Reservation> getAllReservationByCarId(Long carId );
 }

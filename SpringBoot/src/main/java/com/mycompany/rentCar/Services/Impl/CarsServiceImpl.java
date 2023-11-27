@@ -8,14 +8,10 @@ import com.mycompany.rentCar.Services.CarsService;
 import com.mycompany.rentCar.Services.ImageService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
-import org.springframework.util.StringUtils;
-import org.springframework.web.multipart.MultipartFile;
 
 import javax.persistence.EntityNotFoundException;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 @Service
 @AllArgsConstructor
@@ -24,39 +20,17 @@ public class CarsServiceImpl implements CarsService {
     private final ImageService imageService;
 
     @Override
-    public Cars addCar(Cars car) {
+    public Cars addCar(Cars car, Long userId) {
+        car.setUserId(userId);
+        Cars savedCar = carsRepository.save(car);
+        return savedCar;
+    }
+
+
+    public Cars updateCar(Cars car) {
         return carsRepository.save(car);
     }
 
-    @Override
-    public Cars updatecar(Long carId, Cars updatedCar, MultipartFile newImage) throws IOException {
-        Cars existingCar = carsRepository.findById(carId)
-                .orElseThrow(() -> new EntityNotFoundException("La voiture avec l'ID " + carId + " n'a pas été trouvée"));
-
-        existingCar.setName(updatedCar.getName());
-        existingCar.setModel(updatedCar.getModel());
-        existingCar.setNb_doors(updatedCar.getNb_doors());
-        existingCar.setNb_places(updatedCar.getNb_places());
-        existingCar.setAddress(updatedCar.getAddress());
-        existingCar.setDescription((updatedCar.getDescription()));
-        existingCar.setPrice_per_day(updatedCar.getPrice_per_day());
-        existingCar.setRegistration_num(updatedCar.getRegistration_num());
-        existingCar.setGearbox(updatedCar.getGearbox());
-
-        Image existingImage = existingCar.getImage();
-        if (existingImage == null) {
-            Image newImageEntity = imageService.addImage(newImage, carId);
-            existingCar.setImage(newImageEntity);
-        } else {
-            String fileName = StringUtils.cleanPath(Objects.requireNonNull(newImage.getOriginalFilename()));
-            String fileType = newImage.getContentType();
-            byte[] data = newImage.getBytes();
-            existingImage.setFileName(fileName);
-            existingImage.setFileType(fileType);
-            existingImage.setData(data);
-        }
-        return carsRepository.save(existingCar);
-    }
      @Override
     public List<CarDTO> getAllCars() {
         List<Cars> allCars = (List<Cars>) carsRepository.findAll();
@@ -65,13 +39,11 @@ public class CarsServiceImpl implements CarsService {
          for (Cars car : allCars) {
              CarDTO carDTO = new CarDTO(car);
 
-             // Récupérez l'image associée à la voiture
              Image image = car.getImage();
              if (image != null) {
                  carDTO.setImageId(image.getId());
                  carDTO.setImageData(image.getData());
                  carDTO.setImageFileType(image.getFileType());
-                 // Ajoutez d'autres propriétés d'image si nécessaires
              }
 
              carsWithImages.add(carDTO);
@@ -84,7 +56,6 @@ public class CarsServiceImpl implements CarsService {
         return carsRepository.findById(carId)
                 .orElse(null);
     }
-
 public List<CarDTO> getCarsByName(String name) {
     List<CarDTO> matchingCars = new ArrayList<>();
 
@@ -244,6 +215,20 @@ public List<CarDTO> getCarsByName(String name) {
     }
 
 
+
+
+    @Override
+    public void deleteCar(Long carId) {
+        Cars carToDelete = carsRepository.findById(carId)
+                .orElseThrow(() -> new EntityNotFoundException("La voiture avec l'ID " + carId + " n'a pas été trouvée"));
+
+        carsRepository.delete(carToDelete);
+    }
+//        @Override
+//        public List<Reservation> getAllReservationByCarId(Long carId) {
+//        return carsRepository.findAllByCarId(carId);
+//
+//    }
 
 
 }

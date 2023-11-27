@@ -14,7 +14,6 @@ import { ListReservationClientComponent } from './components/reservations/list-r
 import { ListVoitureUserComponent } from './components/cars/list-voiture-user/list-voiture-user.component';
 import { ListVoitureAgenceComponent } from './components/cars/list-voiture-agence/list-voiture-agence.component';
 import { ListAgenceComponent } from './components/agency/list-agence/list-agence.component';
-import { ListReclamation } from './models/reclamation';
 import { ListReclamationComponent } from './components/reclamation/list-reclamation/list-reclamation.component';
 import { ListClientComponent } from './components/client/list-client/list-client.component';
 
@@ -22,7 +21,8 @@ import { AddCarComponent } from './components/cars/add-car/add-car.component';
 import { AddReclamationComponent } from './components/reclamation/add-reclamation/add-reclamation.component';
 import { AddReservationComponent } from './components/reservations/add-reservation/add-reservation.component';
 import { CalendarComponent } from './components/calendar/calendar.component';
-import { SearchCarsComponent } from './search-cars/search-cars.component';
+import { EditCarComponent } from './edit-car/edit-car.component';
+
 
 
 const routes: Routes = [
@@ -65,23 +65,23 @@ const routes: Routes = [
       },
       {
         path: 'reservation-agence',
-        component: ListReservationAgenceComponent 
+        component: ListReservationAgenceComponent
       },
       {
         path: 'reservation-client',
-        component: ListReservationClientComponent 
+        component: ListReservationClientComponent
       },
       {
         path: 'list-voiture-user',
-        component: ListVoitureUserComponent 
+        component: ListVoitureUserComponent
       },
       {
         path: 'list-voiture-agence',
-        component: ListVoitureAgenceComponent 
+        component: ListVoitureAgenceComponent
       },
       {
         path: 'list-agence',
-        component: ListAgenceComponent 
+        component: ListAgenceComponent
       },
       {
         path: 'list-reclamation',
@@ -100,17 +100,24 @@ const routes: Routes = [
         component: AddReclamationComponent
       },
       {
-        path: 'reservation',
+        path: 'reservation/:id',
         component: AddReservationComponent
       },
       {
         path: 'calendar',
         component:CalendarComponent
       },
+
       { path: 'search/:keyword',
        component: ListVoitureUserComponent },
        
-      { path: 'search', component: ListVoitureUserComponent }
+      { path: 'search', component: ListVoitureUserComponent },
+
+      {
+        path: 'edit-car/:id',
+        component:EditCarComponent
+      },
+
     ],
   }
 ];

@@ -1,7 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { CarsService } from 'src/app/services/cars.service';
 import { CarDTO } from 'src/app/Models/CarDTO';
 import { ActivatedRoute, Router } from '@angular/router';
+import { ca } from 'date-fns/locale';
+
 
 @Component({
   selector: 'app-list-voiture-user',
@@ -9,12 +11,11 @@ import { ActivatedRoute, Router } from '@angular/router';
   styleUrls: ['./list-voiture-user.component.css']
 })
 export class ListVoitureUserComponent implements OnInit {
+  @Input() car!: CarDTO;
   cars: CarDTO[] = [];
   searchResults: CarDTO[] = [];
   showSearchResults: boolean = false;
-
   constructor(private carService: CarsService, private route: ActivatedRoute, private router : Router) {}
-
   ngOnInit(): void {
     // Récupérez tous les véhicules à partir du service lors de l'initialisation
     this.route.paramMap.subscribe(()=>{
@@ -57,4 +58,37 @@ export class ListVoitureUserComponent implements OnInit {
     }
     return '';
   }
+  deleteCar(car: CarDTO): void {
+    if (car && car.id) {
+      this.carService.delete(car.id).subscribe(
+        () => {
+          console.log(`Car with ID ${car.id} deleted successfully.`);
+          this.router.navigate(['/list-voiture-user']).then(() => {
+          location.reload();
+          });
+        },
+        (error) => {
+          console.error('Error deleting car:', error);
+        }
+      );
+    } else {
+      console.error('Invalid car data for deletion.', car);
+    }
+  }
+  
+  editCar(car: CarDTO): void {
+    if (car && car.id) {
+      this.router.navigate(['/edit-car', car.id]);
+    } else {
+      console.error('Invalid car data for editing.', car);
+    }
+  }
+  reserveCar(car: CarDTO):void{
+    if (car && car.id){
+      this.router.navigate(['/reservation', car.id]);
+    }else{
+      console.error('Invalid car data for reserving.', car);
+    }
+  }
 }
+

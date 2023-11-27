@@ -18,6 +18,18 @@
               <i class="fas fa-search"></i>
             </a>
           </li>
+          <ng-container *ngIf="!isLoggedIn; else logoutSection">
+            <li class="nav-item">
+              <a href="/login" class="nav-link"><i class="fas fa-user"></i></a>
+            </li>
+          </ng-container>
+          <ng-template #logoutSection>
+            <li class="nav-item">
+              <a (click)="logout()" href="" class="nav-link"><i class="fas fa-sign-out-alt"></i></a>
+            </li>
+          </ng-template>
+
+
         </ul>
         <app-search-cars></app-search-cars>
       </div>

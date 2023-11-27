@@ -1,5 +1,6 @@
 package com.mycompany.rentCar.Entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -19,6 +20,7 @@ public class Image {
     @Lob
     private byte[] data;
     @OneToOne
+    @JsonIgnore
     @JoinColumn(name = "Car_id")
     private Cars cars;
     public Image(String fileName, String fileType, byte[] imageData) {
