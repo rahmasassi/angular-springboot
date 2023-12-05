@@ -26,14 +26,23 @@
               <span class="cat">{{ car.model }}</span>
               <p class="price ml-auto">{{ car.price_per_day }} <span>/day</span></p>
             </div>
+            
             <div class="d-flex mb-0 d-block justify-content-center">
-              <button mat-icon-button class="btn btn-primary rounded-0 py-2 mx-2" style="width: 110px; font-size: 16px;" (click)="reserveCar(car)"><mat-icon aria-label="Info">info</mat-icon></button>
-              <button mat-icon-button class="btn btn-secondary rounded-0 py-2 mx-2" style="width: 110px; font-size: 16px;" (editClicked)="editCar(car)"><mat-icon aria-label="Spell Check">spellcheck</mat-icon></button>
+              <button mat-icon-button class="btn btn-primary rounded-0 py-2 mx-2" style="width: 110px; font-size: 16px;" (click)="reserveCar(car)">
+                <mat-icon aria-label="Event">event</mat-icon>
+              </button>              
+              <button mat-icon-button class="btn btn-secondary rounded-0 py-2 mx-2" style="width: 110px; font-size: 16px;" (click)="detailCar(car)">
+                <mat-icon aria-label="Spell Check">spellcheck</mat-icon>
+              </button>
             </div>
-            <div class="d-flex mb-0 d-block justify-content-center">
-              <button mat-icon-button class="btn btn-danger rounded-0 py-2 mx-2" style="width: 110px; font-size: 16px;" (deleteClicked)="deleteCar(car)"><mat-icon aria-label="Trash">delete</mat-icon></button>
-              <!-- Correction de la balise div fermante -->
-              <button mat-icon-button class="btn btn-warning rounded-0 py-2 mx-2" style="width: 110px; font-size: 16px;"><mat-icon aria-label="Plus">add</mat-icon></button>
+
+            <div class="d-flex mb-0 d-block justify-content-center" *ngIf="userRoles.includes('ROLE_AGENCY')">
+              <button mat-icon-button class="btn btn-danger rounded-0 py-2 mx-2" style="width: 110px; font-size: 16px;" (click)="deleteCar(car)">
+                <mat-icon aria-label="Trash">delete</mat-icon>
+              </button>
+              <button mat-icon-button class="btn btn-warning rounded-0 py-2 mx-2" style="width: 110px; font-size: 16px;" (click)="editCar(car)">
+                <mat-icon aria-label="Edit">edit</mat-icon>
+              </button>
             </div>
           </div>
         </div>

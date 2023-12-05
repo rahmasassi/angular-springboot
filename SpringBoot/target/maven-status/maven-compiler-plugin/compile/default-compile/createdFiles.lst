@@ -43,3 +43,4 @@ com\mycompany\rentCar\ApiResponse.class
 com\mycompany\rentCar\CarDTO\AuthenticationDTO$AuthenticationDTOBuilder.class
 com\mycompany\rentCar\Entities\AppUser.class
 com\mycompany\rentCar\Services\Impl\ReservationServiceImpl.class
+com\mycompany\rentCar\Controllers\ReservationRequestBody.class

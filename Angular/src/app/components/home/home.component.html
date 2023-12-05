@@ -12,14 +12,14 @@
                 
               </div>
 
-              <div class=" d-flex align-items-center mt-4 justify-content-center">
-                <div class="">
-                  <button class="green-button" style="font-size: 18px;">Sign In</button>
-                </div>
-                <div>
-                  <button class="moi-transparent souligne" style="font-size: 18px;">Sign Up</button>
-                </div>
-              </div>
+              <div class="d-flex align-items-center mt-4 justify-content-center">
+  <div *ngIf="!isLoggedIn">
+    <button class="green-button" style="font-size: 18px;" [routerLink]="['/login']">Sign In</button>
+  </div>
+  <div *ngIf="!isLoggedIn">
+    <button class="moi-transparent souligne" style="font-size: 18px;" [routerLink]="['/inscrire-agency']">Sign Up</button>
+  </div>
+</div>
 
           </div>
         </div>

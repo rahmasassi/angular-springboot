@@ -26,7 +26,8 @@ public class Cars {
     private String registration_num;
     private String gearbox;
 //    @Column(name = "userid", nullable = true)
-    private Long userId;
+
+    private Long agencyId;
     @OneToOne(mappedBy = "cars", cascade = CascadeType.REMOVE)
     @JsonIgnore
     private Image image;

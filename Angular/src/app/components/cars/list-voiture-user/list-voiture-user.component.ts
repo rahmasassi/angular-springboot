@@ -3,6 +3,7 @@ import { CarsService } from 'src/app/services/cars.service';
 import { CarDTO } from 'src/app/Models/CarDTO';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ca } from 'date-fns/locale';
+import { AuthenticateService } from 'src/app/services/authenticate.service';
 
 
 @Component({
@@ -15,24 +16,58 @@ export class ListVoitureUserComponent implements OnInit {
   cars: CarDTO[] = [];
   searchResults: CarDTO[] = [];
   showSearchResults: boolean = false;
-  constructor(private carService: CarsService, private route: ActivatedRoute, private router : Router) {}
+  
+  userRoles: string[] = [];
+
+  constructor(private carService: CarsService, private route: ActivatedRoute, private router : Router, private authService: AuthenticateService) {}
+  
   ngOnInit(): void {
-    // Récupérez tous les véhicules à partir du service lors de l'initialisation
+
+    const userId=this.authService.getCurrentUserId();
+    console.log("userid", userId);
+
+    this.authService.getUserRolesById(userId).subscribe(
+      (roles) => {
+        this.userRoles = roles;
+        console.log('Roles:', roles);
+      },
+      (error) => {
+        console.error('Error fetching user roles:', error);
+      }
+    );
+
     this.route.paramMap.subscribe(()=>{
       this.listCars();
     });
-    
   }
+
   listCars(){
     this.showSearchResults = this.route.snapshot.paramMap.has('keyword');
     if (this.showSearchResults){
       this.searchCars();
     }
     else{
-      this.getAllCars();
+      if (this.userRoles.includes('ROLE_AGENCY')) {
+        this.getCarsByAgency();
+      } else {
+        this.getAllCars();
+      }
     }
     
   }
+
+  getCarsByAgency() {
+    const agencyId = this.authService.getCurrentUserId();
+    this.carService.getCarsByAgencyId(agencyId).subscribe(
+      (cars) => {
+        this.cars = cars;
+      },
+      (error) => {
+        console.error('Error getting cars by agency ID', error);
+      }
+    );
+  }
+
   searchCars(){
     const theKeyword: string | null = this.route.snapshot.paramMap.get('keyword');
 
@@ -46,11 +81,13 @@ export class ListVoitureUserComponent implements OnInit {
       
     }
   }
+
   getAllCars(): void {
     this.carService.getAllCars().subscribe((data: CarDTO[]) => {
       this.cars = data;
     });
   }
+
   getImageUrl(car: CarDTO): string {
     if (car.imageData) {
       const base64Image = 'data:image/' + car.fileType + ';base64,' + car.imageData;
@@ -58,14 +95,13 @@ export class ListVoitureUserComponent implements OnInit {
     }
     return '';
   }
+
   deleteCar(car: CarDTO): void {
     if (car && car.id) {
       this.carService.delete(car.id).subscribe(
         () => {
           console.log(`Car with ID ${car.id} deleted successfully.`);
-          this.router.navigate(['/list-voiture-user']).then(() => {
-          location.reload();
-          });
+          this.listCars();
         },
         (error) => {
           console.error('Error deleting car:', error);
@@ -82,10 +118,20 @@ export class ListVoitureUserComponent implements OnInit {
     } else {
       console.error('Invalid car data for editing.', car);
     }
+    
   }
+
   reserveCar(car: CarDTO):void{
     if (car && car.id){
       this.router.navigate(['/reservation', car.id]);
+    }else{
+      console.error('Invalid car data for reserving.', car);
+    }
+  }
+
+  detailCar(car: CarDTO):void{
+    if (car && car.id){
+      this.router.navigate(['/detail-car', car.id]);
     }else{
       console.error('Invalid car data for reserving.', car);
     }

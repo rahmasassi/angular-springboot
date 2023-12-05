@@ -5,7 +5,7 @@ export class Reservation {
   address?: string;
   phone?: string;
   registration?: string;
-  Status?: boolean;
+  status?: boolean;
   car_id?: number;
-
+  user_id?: number;
 }

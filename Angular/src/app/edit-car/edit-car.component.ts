@@ -53,10 +53,11 @@ export class EditCarComponent implements OnInit {
   this.carsService.updateCar(carId, formData).subscribe(
     (response) => {
       console.log('Backend response:', response);
-      
+      this.router.navigate(['/list-voiture-agence']);
     },
     (error) => {
       console.error('Error updating car:', error);
+      this.router.navigate(['/list-voiture-agence']);
     }
   );
   }

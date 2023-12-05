@@ -26,7 +26,7 @@ public class CarDTO {
     private String imageName;
     private String imageFileType;
 //    @Column(name = "userid", nullable = true)
-    private Long userId;
+    private Long agencyId;
 
     private byte[] imageData;
     public CarDTO(Cars car) {
@@ -40,7 +40,7 @@ public class CarDTO {
         this.price_per_day = car.getPrice_per_day();
         this.registration_num = car.getRegistration_num();
         this.gearbox = car.getGearbox();
-        this.userId=car.getUserId();
+        this.agencyId=car.getAgencyId();
 
 
         Image image = car.getImage();

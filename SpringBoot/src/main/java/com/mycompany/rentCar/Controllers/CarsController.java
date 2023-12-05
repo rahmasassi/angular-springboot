@@ -10,6 +10,7 @@ import com.mycompany.rentCar.Services.ImageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.security.core.Authentication;
@@ -33,22 +34,23 @@ public class CarsController {
         this.imageService = imageService;
         this.userService = userService;
     }
-@PostMapping("/addCar")
-public ResponseEntity<ApiResponse> addCarWithUserId(
-        @RequestParam("file") MultipartFile file,
-        @ModelAttribute Cars car,
-        @RequestParam("userId") Long userId) {
-    try {
-        car.setUserId(userId);
-        Cars savedCar = carsService.addCar(car, userId); // Appel modifié pour inclure userId
-        Image addedImage = imageService.addImage(file, savedCar.getId());
-        ApiResponse response = new ApiResponse("Voiture ajoutée avec succès avec l'ID : " + savedCar.getId(), savedCar.getId());
-        return ResponseEntity.ok(response);
-    } catch (Exception e) {
-        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                .body(new ApiResponse("Erreur lors de l'ajout de la voiture : " + e.getMessage(), null));
+    @PostMapping("/addCar")
+    public ResponseEntity<ApiResponse> addCarWithUserId(
+            @RequestParam("file") MultipartFile file,
+            @ModelAttribute Cars car,
+            @RequestParam("userId") Long userId) {
+        try {
+            car.setAgencyId(userId);
+            Cars savedCar = carsService.addCar(car, userId); // Appel modifié pour inclure userId
+            Image addedImage = imageService.addImage(file, savedCar.getId());
+            ApiResponse response = new ApiResponse("Voiture ajoutée avec succès avec l'ID : " + savedCar.getId(), savedCar.getId());
+            return ResponseEntity.ok(response);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body(new ApiResponse("Erreur lors de l'ajout de la voiture : " + e.getMessage(), null));
+        }
     }
-}
+
     @PutMapping("/updateCar/{carId}")
     public ResponseEntity<String> updateCar(
             @PathVariable("carId") long carId,
@@ -91,15 +93,9 @@ public ResponseEntity<ApiResponse> addCarWithUserId(
             List<CarDTO> carsWithImages = carsService.getAllCars();
             return ResponseEntity.ok(carsWithImages);
         } catch (Exception e) {
-            // Loggez l'exception pour avoir plus d'informations
             e.printStackTrace();
-
-            // Vous pouvez également loguer le message de l'exception
-            // logger.error("Erreur lors de la récupération des voitures: " + e.getMessage());
-
-            // Renvoyez une réponse avec un message d'erreur plus informatif
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                    .body(Collections.emptyList()); // ou null, selon vos préférences
+                    .body(Collections.emptyList());
         }
     }
 
@@ -261,4 +257,16 @@ public ResponseEntity<ApiResponse> addCarWithUserId(
                     .body("Erreur lors de la suppression de la voiture : " + e.getMessage());
         }
     }
+
+    @GetMapping("/getCarsByAgencyId/{agencyId}")
+    public ResponseEntity<List<CarDTO>> getCarsByAgencyId(@PathVariable Long agencyId) {
+        try {
+            List<CarDTO> carsByAgency = carsService.getCarsByAgencyId(agencyId);
+            return ResponseEntity.ok(carsByAgency);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(Collections.emptyList());
+        }
+    }
+
 }

@@ -1,24 +1,31 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CarReservationClient } from '../../../Models/list-reservation-client.model';
+import { Reservation } from 'src/app/Models/reservation';
+import { ReservationService } from 'src/app/services/reservation.service';
+import { AuthenticateService } from 'src/app/services/authenticate.service';
 
 @Component({
   selector: 'app-list-reservation-client',
   templateUrl: './list-reservation-client.component.html',
   styleUrls: ['./list-reservation-client.component.css']
 })
-export class ListReservationClientComponent {
-  cars: CarReservationClient[] = [
-    new CarReservationClient(1, 'Cheverolet SUV Car', 'assets/images/car-1.jpg', "KaryaaaExpresssss", 119, new Date('2023-09-25').toISOString().split('T')[0]),
-    new CarReservationClient(1, 'Cheverolet SUV Car', 'assets/images/car-1.jpg', "KaryaaaExpresssss", 119, new Date('2023-09-25').toISOString().split('T')[0]),
-    new CarReservationClient(1, 'Cheverolet SUV Car', 'assets/images/car-1.jpg', "KaryaaaExpresssss", 119, new Date('2023-09-25').toISOString().split('T')[0]),
-    new CarReservationClient(1, 'Cheverolet SUV Car', 'assets/images/car-1.jpg', "KaryaaaExpresssss", 119, new Date('2023-09-25').toISOString().split('T')[0]),
-    new CarReservationClient(1, 'Cheverolet SUV Car', 'assets/images/car-1.jpg', "KaryaaaExpresssss", 119, new Date('2023-09-25').toISOString().split('T')[0]),
+export class ListReservationClientComponent implements OnInit {
 
-  ];
-  showDetails(car: any) {
-    // Vous pouvez ici définir la logique pour afficher les détails du véhicule, par exemple en utilisant une boîte de dialogue modale ou en redirigeant l'utilisateur vers une page de détails.
-    console.log("Afficher les détails du véhicule :", car);
-    // Vous pouvez implémenter la logique d'affichage des détails ici.
+  reservations: Reservation[] = [];
+
+  constructor(private reservationService: ReservationService, private authService: AuthenticateService) {}
+
+  ngOnInit(): void {
+    const userId = this.authService.getCurrentUserId();
+    console.log("id user", userId);
+    this.reservationService.getReservationsByUserId(userId).subscribe(
+      (reservations) => {
+        this.reservations = reservations;
+        console.log('Reservations:', this.reservations);
+      },
+      (error) => {
+        console.error('Error fetching reservations:', error);
+      }
+    );
   }
-
 }

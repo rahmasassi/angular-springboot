@@ -13,6 +13,8 @@ public interface CarsRepository extends CrudRepository<Cars, Long> {
     List<Cars> findByModel(String model);
     List<Cars> findByAddress(String address);
     List<Cars> findByModelAndAddress(String model, String address);
+    List<Cars> findByAgencyId(Long userId);
+
     //List<Reservation> findAllByCarId(Long carId);
 
 }

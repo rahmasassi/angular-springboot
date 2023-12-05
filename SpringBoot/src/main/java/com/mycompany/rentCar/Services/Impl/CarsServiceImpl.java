@@ -11,17 +11,18 @@ import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityNotFoundException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @AllArgsConstructor
 public class CarsServiceImpl implements CarsService {
     private final CarsRepository carsRepository;
-    private final ImageService imageService;
 
     @Override
     public Cars addCar(Cars car, Long userId) {
-        car.setUserId(userId);
+        car.setAgencyId(userId);
         Cars savedCar = carsRepository.save(car);
         return savedCar;
     }
@@ -66,12 +67,11 @@ public List<CarDTO> getCarsByName(String name) {
 
         for (CarDTO car : allCars) {
             if (car != null && car.getName() != null && car.getName().equalsIgnoreCase(name)) {
-                // Si le nom de la voiture correspond à la recherche, ajoutez-la à la liste de résultats
                 matchingCars.add(car);
             }
         }
     } catch (Exception e) {
-        e.printStackTrace(); // Enregistrez l'exception dans les journaux
+        e.printStackTrace();
 
     }
 
@@ -214,9 +214,6 @@ public List<CarDTO> getCarsByName(String name) {
         }
     }
 
-
-
-
     @Override
     public void deleteCar(Long carId) {
         Cars carToDelete = carsRepository.findById(carId)
@@ -224,11 +221,27 @@ public List<CarDTO> getCarsByName(String name) {
 
         carsRepository.delete(carToDelete);
     }
-//        @Override
-//        public List<Reservation> getAllReservationByCarId(Long carId) {
-//        return carsRepository.findAllByCarId(carId);
-//
-//    }
+
+    @Override
+    public List<CarDTO> getCarsByAgencyId(Long agencyId) {
+        List<Cars> cars = carsRepository.findByAgencyId(agencyId);
+
+        List<CarDTO> carsWithImages = new ArrayList<>();
+        for (Cars car : cars) {
+            CarDTO carDTO = new CarDTO(car);
+
+            Image image = car.getImage();
+            if (image != null) {
+                carDTO.setImageId(image.getId());
+                carDTO.setImageData(image.getData());
+                carDTO.setImageFileType(image.getFileType());
+            }
+
+            carsWithImages.add(carDTO);
+        }
+
+        return carsWithImages;
+    }
 
 
 }

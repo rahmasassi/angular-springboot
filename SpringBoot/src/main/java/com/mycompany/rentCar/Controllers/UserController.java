@@ -2,12 +2,17 @@ package com.mycompany.rentCar.Controllers;
 
 import com.mycompany.rentCar.Entities.Agency;
 import com.mycompany.rentCar.Entities.AppUser;
+import com.mycompany.rentCar.Entities.Role;
 import com.mycompany.rentCar.Services.UserService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @CrossOrigin(origins = "http://localhost:4200")
 @RestController
@@ -34,14 +39,11 @@ public class UserController {
         Long userId = userService.getUserIdByUsername(username);
 
         if (userId != null) {
-            System.out.println("Requête pour récupérer l'ID avec le nom d'utilisateur : " + userId);
             return ResponseEntity.ok(userId);
         } else {
             userId = userService.getAgencyIdByUsername(username);
-            System.out.println("Requête pour récupérer l'ID avec le nom d'utilisateur : " + userId);
 
             if (userId != null) {
-                System.out.println("Requête pour récupérer l'ID avec le nom d'utilisateur : " + userId);
                 return ResponseEntity.ok(userId);
             } else {
                 return ResponseEntity.notFound().build();
@@ -71,4 +73,28 @@ public class UserController {
         List<AppUser> users = userService.getAllUsers();
         return ResponseEntity.ok(users);
     }
+
+    @GetMapping("/getUserRoles/{userId}")
+    public ResponseEntity<List<String>> getUserRoles(@PathVariable Long userId) {
+        Collection<Role> roles = userService.getRolesByUserId(userId);
+
+        if (!roles.isEmpty()) {
+            List<String> roleNames = roles.stream().map(Role::getName).collect(Collectors.toList());
+            return ResponseEntity.ok(roleNames);
+        } else {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(Collections.emptyList());
+        }
+    }
+
+    @GetMapping("/getUserRolesById/{userId}")
+    public ResponseEntity<Collection<String>> getUserRolesById(@PathVariable Long userId) {
+        Collection<String> roleNames = userService.getRoleNamesById(userId);
+
+        if (!roleNames.isEmpty()) {
+            return ResponseEntity.ok(roleNames);
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
 }

@@ -3,6 +3,7 @@ package com.mycompany.rentCar.Services;
 import com.mycompany.rentCar.CarDTO.CarDTO;
 import com.mycompany.rentCar.Entities.Cars;
 import com.mycompany.rentCar.Entities.Reservation;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
@@ -26,5 +27,6 @@ public interface CarsService {
     List<CarDTO> searchCarsByModelAndAddress(String searchTermModel, String searchTermAddress);
     List<CarDTO> searchCarsBySingleParameter(String searchTerm);
     void deleteCar(Long carId);
-    //List<Reservation> getAllReservationByCarId(Long carId );
+    @Transactional
+    List<CarDTO> getCarsByAgencyId(Long agencyId);
 }
