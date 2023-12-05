@@ -15,7 +15,7 @@
     <div class="row">
       <div class="col-md-12 ftco-animate">
         <div class="comment-form-wrap pt-2">
-          <form (ngSubmit)="onUpdate()" enctype="multipart/form-data" class="p-5 bg-light">
+          <form enctype="multipart/form-data" class="p-5 bg-light">
             <div class="row">
               <div class="col-md-6">
                 <div class="form-group">
@@ -67,7 +67,7 @@
             </div>
 
             <div class="form-group d-flex justify-content-center">
-              <button type="submit" value="ADD CAR"class="btn py-3 px-4 btn-primary">Update Car</button>
+              <button type="submit" value="ADD CAR"class="btn py-3 px-4 btn-primary" (click)="onUpdate()">Update Car</button>
             </div>
 
           </form>

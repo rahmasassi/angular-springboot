@@ -6,6 +6,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import javax.persistence.Column;
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -23,6 +25,8 @@ public class CarDTO {
     private long imageId;
     private String imageName;
     private String imageFileType;
+//    @Column(name = "userid", nullable = true)
+    private Long agencyId;
 
     private byte[] imageData;
     public CarDTO(Cars car) {
@@ -36,6 +40,8 @@ public class CarDTO {
         this.price_per_day = car.getPrice_per_day();
         this.registration_num = car.getRegistration_num();
         this.gearbox = car.getGearbox();
+        this.agencyId=car.getAgencyId();
+
 
         Image image = car.getImage();
         if (image != null) {

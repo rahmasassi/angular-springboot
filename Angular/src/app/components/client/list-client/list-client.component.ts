@@ -2,6 +2,7 @@ import { Component, Input } from '@angular/core';
 import { User } from 'src/app/Models/user';
 import { UserService } from 'src/app/services/user.service';
 import { Router } from '@angular/router';
+import { AuthenticateService } from 'src/app/services/authenticate.service';
 
 @Component({
   selector: 'app-list-client',
@@ -11,15 +12,31 @@ import { Router } from '@angular/router';
 export class ListClientComponent {
   @Input() user!: User;
   users: User[] = [];
+  userRoles: string[] = [];
 
   constructor ( 
     private userService : UserService,
-    private router : Router) {}
+    private router : Router,
+    private authService: AuthenticateService) {}
 
   ngOnInit(): void {
+
     this.userService.getAllUsers().subscribe((data: User[]) => {
       this.users = data;
     });
+
+    const userId=this.authService.getCurrentUserId();
+    console.log("userid", userId);
+
+    this.authService.getUserRolesById(userId).subscribe(
+      (roles) => {
+        this.userRoles = roles;
+        console.log('Roles:', roles);
+      },
+      (error) => {
+        console.error('Error fetching user roles:', error);
+      }
+    );
   }
 
   deleteUser(user: User): void {

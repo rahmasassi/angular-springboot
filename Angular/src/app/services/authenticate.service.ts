@@ -9,6 +9,8 @@ import { throwError } from 'rxjs';
 })
 export class AuthenticateService {
 
+  private username: string = '';
+
   private apiUrl = 'http://localhost:8081/api';
   
   constructor(private http: HttpClient) {
@@ -71,6 +73,8 @@ export class AuthenticateService {
           this.getUserIdByUsername(loginData.username).subscribe(
             (userId) => {
               localStorage.setItem('userId', userId.toString());
+              console.log("username set", );
+              
             },
             (error) => {
               console.error('Error getting user ID:', error);
@@ -93,13 +97,20 @@ export class AuthenticateService {
     return localStorage.getItem('token') !== null;
   }
 
-  getUserIdFromUsername(username: string): Observable<any> {
-    return this.http.get(`${this.apiUrl}/getUserId?username=${username}`);
-  }
-
   getUserIdByUsername(username: string): Observable<number> {
     const url = `${this.apiUrl}/user/getUserId/${username}`;
     return this.http.get<number>(url);
   }
 
+  getCurrentUserId(): number {
+    const userIdString = localStorage.getItem('userId');
+    const userId = userIdString ? parseInt(userIdString, 10) : 0;
+    console.log('Current User ID:', userId);
+    return userId;
+  }
+
+  getUserRolesById(userId: number): Observable<string[]> {
+    const url = `${this.apiUrl}/user/getUserRolesById/${userId}`;
+    return this.http.get<string[]>(url);
+  }  
 }

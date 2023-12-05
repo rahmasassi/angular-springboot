@@ -4,6 +4,7 @@ import com.mycompany.rentCar.Entities.Agency;
 import com.mycompany.rentCar.Entities.Role;
 import com.mycompany.rentCar.Entities.AppUser;
 
+import java.util.Collection;
 import java.util.List;
 
 public interface UserService {
@@ -19,6 +20,10 @@ public interface UserService {
 
     boolean checkUsernameExistsAgency(String username);
 
+    Collection<Role> getRolesByUserId(Long userId);
+
+    Collection<Role> getRolesByAgencyId(Long agencyId);
+
     Long getAgencyIdByUsername(String username);
 
     void deleteAgency(Long agencyId);
@@ -28,4 +33,6 @@ public interface UserService {
     List<Agency> getAllAgencies();
 
     List<AppUser> getAllUsers();
+
+    Collection<String> getRoleNamesById(Long userId);
 }

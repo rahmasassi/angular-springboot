@@ -11,6 +11,7 @@ export class CarDTO {
   price_per_day: number;
   registration_num: string;
   gearbox: string;
+  agenceId: number;
   photo?: File;
   imageData?: string;
   fileType?: string;
@@ -26,6 +27,7 @@ export class CarDTO {
     this.price_per_day = car.price_per_day;
     this.registration_num = car.registration_num;
     this.gearbox = car.gearbox;
+    this.agenceId=car.userId;
     this.photo = car.photo;
     this.imageData = car.imageData;  
     this.fileType = car.fileType;

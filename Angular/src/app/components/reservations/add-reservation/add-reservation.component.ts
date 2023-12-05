@@ -2,7 +2,9 @@ import { formatDate } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Reservation } from 'src/app/Models/reservation';
+import { AuthenticateService } from 'src/app/services/authenticate.service';
 import { ReservationService } from 'src/app/services/reservation.service';
+
 
 @Component({
   selector: 'app-add-reservation',
@@ -34,7 +36,8 @@ export class AddReservationComponent implements OnInit{
 
   constructor(private reservationService: ReservationService,
     private route: ActivatedRoute,
-    private router: Router) { }
+    private router: Router,
+    private authService: AuthenticateService) { }
 
 
 
@@ -45,16 +48,22 @@ export class AddReservationComponent implements OnInit{
         phone: this.reservation.phone,
         dateDebut: this.reservation.dateDebut,
         dateFin: this.reservation.dateFin,
-        Status: this.reservation.Status
+        status: this.reservation.Status
       };
+      const userId = this.authService.getCurrentUserId();
+      console.log("id user", userId);
       const carId = this.route.snapshot.params['id'];
-      this.reservationService.addReservation(carId ,reservation).subscribe(
-        (response) => {
+
+      this.reservationService.addReservation(carId, userId, reservation).subscribe(
+      (response) => {
           console.log('Reservation added successfully:', reservation.dateDebut);
+          console.log('Réponse de la requête HTTP :', response);
           this.reservation = {};
+          
         },
         (error) => {
-          console.error('Error adding reservation:', error);
+          console.error('Erreur de la requête HTTP :', error);
+          this.router.navigate(['/list-voiture-user']);
         }
       );
 

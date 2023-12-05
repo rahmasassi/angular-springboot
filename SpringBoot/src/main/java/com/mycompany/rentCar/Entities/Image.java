@@ -18,6 +18,7 @@ public class Image {
     private String fileName;
     private String fileType;
     @Lob
+    @Basic(fetch = FetchType.LAZY)
     private byte[] data;
     @OneToOne
     @JsonIgnore

@@ -22,6 +22,9 @@ import { AddReclamationComponent } from './components/reclamation/add-reclamatio
 import { AddReservationComponent } from './components/reservations/add-reservation/add-reservation.component';
 import { CalendarComponent } from './components/calendar/calendar.component';
 import { EditCarComponent } from './edit-car/edit-car.component';
+import { RoleGuard } from './services/role.service';
+import { AuthGuard } from './services/auth-guard.service';
+
 
 
 const routes: Routes = [
@@ -51,7 +54,7 @@ const routes: Routes = [
         component: HomeComponent
       },
       {
-        path: 'detail-car',
+        path: 'detail-car/:id',
         component: DetailCarComponent
       },
       {
@@ -92,7 +95,8 @@ const routes: Routes = [
       },
       {
         path: 'addcar',
-        component: AddCarComponent
+        component: AddCarComponent,
+        canActivate: [AuthGuard]
       },
       {
         path: 'addrec',
@@ -106,10 +110,17 @@ const routes: Routes = [
         path: 'calendar',
         component:CalendarComponent
       },
+
+      { path: 'search/:keyword',
+       component: ListVoitureUserComponent },
+       
+      { path: 'search', component: ListVoitureUserComponent },
+
       {
         path: 'edit-car/:id',
         component:EditCarComponent
       },
+
     ],
   }
 ];

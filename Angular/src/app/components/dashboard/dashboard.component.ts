@@ -1,4 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
+import { SearchCarsComponent } from 'src/app/search-cars/search-cars.component';
+import { DataSharingServiceService } from 'src/app/services/data-sharing-service.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -6,5 +8,5 @@ import { Component } from '@angular/core';
   styleUrls: ['./dashboard.component.css']
 })
 export class DashboardComponent {
-
+ 
 }

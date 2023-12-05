@@ -15,12 +15,12 @@
     <div class="container">
         <div class="row justify-content-center">
             <div class="col-md-12">
-                <div class="car-details">
-                    <div class="img rounded" style="background-image: url(assets/images/bg_1.jpg);"></div>
+                <div class="car-details" >
+                    <div class="img rounded" [style.background-image]="'url(' + getImageUrl(car) + ')'"></div>
                     <div class="text text-center">
-                        <h2>Mercedes Grand Sedan</h2>
-                        <span class="subheading">Registration Number : </span>
-                        <span class="subheading">Address : </span>
+                        <h2> {{ car.model }} </h2>
+                        <span class="subheading">Name : {{ car.name }}</span>
+                        <span class="subheading">Registration Number : {{ car.registration_num }}</span>
                     </div>
                 </div>
             </div>
@@ -34,11 +34,11 @@
           <div class="media block-6 services">
             <div class="media-body py-md-4">
                 <div class="d-flex mb-3 align-items-center">
-                    <div class="icon d-flex align-items-center justify-content-center"><span class="flaticon-dashboard"></span></div>
+                    <div class="icon d-flex align-items-center justify-content-center"><span class="fas fa-map-marker-alt"></span></div>
                     <div class="text">
                       <h3 class="heading mb-0 pl-3">
-                          Consume
-                          <span>40,000</span>
+                          Address
+                          <span>{{ car.address }}</span>
                       </h3>
                   </div>
               </div>
@@ -53,7 +53,7 @@
                     <div class="text">
                       <h3 class="heading mb-0 pl-3">
                           Gearbox
-                          <span>Manual</span>
+                          <span>{{car.gearbox}}</span>
                       </h3>
                   </div>
               </div>
@@ -68,7 +68,7 @@
                     <div class="text">
                       <h3 class="heading mb-0 pl-3">
                           Seats
-                          <span>5 Adults</span>
+                          <span>{{car.nb_places}}</span>
                       </h3>
                   </div>
               </div>
@@ -83,7 +83,7 @@
                     <div class="text">
                       <h3 class="heading mb-0 pl-3">
                           Doors
-                          <span>4 Bags</span>
+                          <span>{{car.nb_doors}}</span>
                       </h3>
                   </div>
               </div>
@@ -98,7 +98,7 @@
                     <div class="text">
                       <h3 class="heading mb-0 pl-3">
                           Price
-                          <span>Petrol</span>
+                          <span>{{car.price_per_day}}</span>
                       </h3>
                   </div>
               </div>
@@ -108,7 +108,7 @@
         </div>
         <div class="row justify-content-center">
           <div class="col-md-6 text-center ftco-animate">
-              <p><a href="#" class="btn btn-primary py-3 px-4">Réserver maintenant</a></p>
+              <p><a href="#" class="btn btn-primary py-3 px-4" (click)="reserveCar(car)">Reserve now</a></p>
           </div>
       </div>
         <div class="row">
