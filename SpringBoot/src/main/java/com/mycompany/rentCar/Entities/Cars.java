@@ -25,8 +25,7 @@ public class Cars {
     private float price_per_day;
     private String registration_num;
     private String gearbox;
-//    @Column(name = "userid", nullable = true)
-
+    //    @Column(name = "userid", nullable = true)
     private Long agencyId;
     @OneToOne(mappedBy = "cars", cascade = CascadeType.REMOVE)
     @JsonIgnore

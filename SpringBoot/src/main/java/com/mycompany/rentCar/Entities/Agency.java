@@ -12,6 +12,7 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 @Entity
 @Data
@@ -59,7 +60,6 @@ public class Agency implements Customer {
             inverseJoinColumns = @JoinColumn(name = "roles_id")
     )
     private Collection<Role> roles = new ArrayList<>();
-
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return null;
