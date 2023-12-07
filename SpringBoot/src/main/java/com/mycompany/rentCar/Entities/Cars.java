@@ -30,7 +30,7 @@ public class Cars {
     @OneToOne(mappedBy = "cars", cascade = CascadeType.REMOVE)
     @JsonIgnore
     private Image image;
-    @OneToMany(mappedBy="car")
+    @OneToMany(mappedBy="car", cascade = CascadeType.REMOVE)
     @JsonIgnore
     @Lazy
     private List<Reservation> reservationList;

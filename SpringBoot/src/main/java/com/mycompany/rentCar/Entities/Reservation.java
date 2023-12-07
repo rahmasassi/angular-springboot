@@ -28,7 +28,8 @@ public class Reservation {
     private String address;
     private String phone;
     private String registration;
-    private boolean Status;
+    private String Status;
+    private float priceTt;
     @ManyToOne
     @JoinColumn(name = "car_id")
     @JsonIgnore

@@ -26,13 +26,11 @@ import java.util.List;
 @RequestMapping("/api/cars")
 public class CarsController {
     private final CarsService carsService;
-    private final UserService userService;
     private final ImageService imageService;
     @Autowired
     public CarsController(CarsService carsService, ImageService imageService,UserService userService) {
         this.carsService = carsService;
         this.imageService = imageService;
-        this.userService = userService;
     }
     @PostMapping("/addCar")
     public ResponseEntity<ApiResponse> addCarWithUserId(
@@ -41,13 +39,13 @@ public class CarsController {
             @RequestParam("userId") Long userId) {
         try {
             car.setAgencyId(userId);
-            Cars savedCar = carsService.addCar(car, userId); // Appel modifié pour inclure userId
+            Cars savedCar = carsService.addCar(car, userId);
             Image addedImage = imageService.addImage(file, savedCar.getId());
-            ApiResponse response = new ApiResponse("Voiture ajoutée avec succès avec l'ID : " + savedCar.getId(), savedCar.getId());
+            ApiResponse response = new ApiResponse("add car successfully : " + savedCar.getId(), savedCar.getId());
             return ResponseEntity.ok(response);
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                    .body(new ApiResponse("Erreur lors de l'ajout de la voiture : " + e.getMessage(), null));
+                    .body(new ApiResponse("Error add car : " + e.getMessage(), null));
         }
     }
 
@@ -115,6 +113,7 @@ public class CarsController {
                     .body(null);
         }
     }
+
     @GetMapping("/searchCarsByName")
     public ResponseEntity<List<CarDTO>> searchCarsByName(@RequestParam String name) {
     try {

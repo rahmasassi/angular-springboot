@@ -59,7 +59,7 @@ const routes: Routes = [
         component: DetailCarComponent
       },
       {
-        path: 'detail-reservation',
+        path: 'detail-reservation/:id',
         component: DetailReservationComponent
       },
       {
