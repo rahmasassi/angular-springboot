@@ -1,15 +1,26 @@
 export class ListReclamation {
-    constructor(
-      public id: number,
-      public name: string,
-      public description : string,
+
+     id?: number;
+     name?: string;
+     description? : string;
+     userId ? : number;
+     agencyId ? : number;
+    // constructor(
+    //   public this.id: number,
+    //   public name: string,
+    //   public description : string,
+    //   public userId ? : number,
+    //   public agencyId ? : number
+      
      
-    //   public imageUrl: string,
-    //   public nameClient: string,
-    //   //  public hourlyRate: number,
-    //   public drivinglicence: number,
-    //   public monthlyRate: number,
-    //   public reservationDate: string,
-    //   public prix : number,
-    ) {}
+   
+    // ) {}
+    constructor(id?: number, name?: string, description?: string, userId?: number, agencyId?: number) {
+      this.id = id;
+      this.name = name;
+      this.description = description;
+      this.userId = userId;
+      this.agencyId = agencyId;
+    }
+
   }

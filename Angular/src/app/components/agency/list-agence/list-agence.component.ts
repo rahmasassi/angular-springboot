@@ -41,4 +41,22 @@ export class ListAgenceComponent {
       console.error('Invalid agency data for deletion.', agency);
     }
   } 
+  // navigateToAddReclamation() {
+  //   this.router.navigate(['addrec']);
+  // }
+  // navigateToAddReclamation(agency: Agency) {
+  //   this.router.navigate(['add-reclamation', agency.id]);
+  // }
+  navigateToAddReclamation(agency: Agency): void {
+    // Vérifiez si l'agence a un ID valide
+    if (agency && agency.id) {
+      // Naviguez vers le composant AddReclamationComponent avec l'ID de l'agence
+      this.router.navigate(['add-reclamation', agency.id]);
+      console.log('agency.id',agency.id);
+    } else {
+      console.error('Invalid agency data:', agency);
+      // Gérez le cas où l'ID de l'agence n'est pas valide
+    }
+  }
+
 }

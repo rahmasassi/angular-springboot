@@ -1,3 +1,4 @@
+
 <section class="hero-wrap hero-wrap-2 js-fullheight" style="background-image: url('assets/images/bg_3.jpg');" data-stellar-background-ratio="0.5">
   <div class="overlay"></div>
   <div class="container">
@@ -12,7 +13,6 @@
     </div>
   </div>
 </section>
-
 <section class="ftco-section ftco-cart">
   <div class="container">
     <div class="row">
@@ -26,17 +26,17 @@
                 <th class="bg-black heading">Actions</th>
               </tr>
             </thead>
-            <tbody>
-                <tr *ngFor="let reclamation of reclamations" class="align-middle">
-                   <td class="text-center">{{ reclamation.userId }}</td>
-                     <td class="text-center">{{ reclamation.description }}</td>
-                   <td class="text-center">
-                     <button mat-icon-button class="mat-button-custom" (click)="deleteReclamation(reclamation)">
-                        <mat-icon aria-label="Delete" style="color: red;">delete</mat-icon>
-                     </button>
-                   </td>
+            <tbody *ngIf="reclamations && reclamations.length > 0">
+               <tr *ngFor="let reclamation of reclamations" class="align-middle">
+                  <td class="text-center">{{ reclamation.userId }}</td>
+                    <td class="text-center">{{ reclamation.description }}</td>
+                  <td class="text-center">
+                    <button mat-icon-button class="mat-button-custom" >
+                      <mat-icon aria-label="Delete" style="color: red;">delete</mat-icon>
+                    </button>
+                  </td>
                 </tr>
-</tbody>
+            </tbody>
           </table>
         </div>
       </div>

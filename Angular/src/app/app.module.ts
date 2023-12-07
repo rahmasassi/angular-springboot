@@ -47,6 +47,7 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
 import { EditCarComponent } from './edit-car/edit-car.component';
 import { ButtonReserveComponent } from './components/button-reserve/button-reserve.component';
+import { ListAllReclamationComponent } from './components/reclamation/list-all-reclamation/list-all-reclamation.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -76,6 +77,7 @@ import { ButtonReserveComponent } from './components/button-reserve/button-reser
     SearchCarsComponent,
     EditCarComponent,
     ButtonReserveComponent,
+    ListAllReclamationComponent,
 
 
 

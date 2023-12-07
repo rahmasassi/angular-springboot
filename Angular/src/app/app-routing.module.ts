@@ -24,6 +24,7 @@ import { CalendarComponent } from './components/calendar/calendar.component';
 import { EditCarComponent } from './edit-car/edit-car.component';
 import { RoleGuard } from './services/role.service';
 import { AuthGuard } from './services/auth-guard.service';
+import { ListAllReclamationComponent } from './components/reclamation/list-all-reclamation/list-all-reclamation.component';
 
 
 
@@ -120,6 +121,13 @@ const routes: Routes = [
         path: 'edit-car/:id',
         component:EditCarComponent
       },
+      { 
+        path: 'add-reclamation/:id', 
+        component: AddReclamationComponent },
+      
+      { 
+        path: 'list-all-reclamation', 
+        component: ListAllReclamationComponent },
 
     ],
   }
