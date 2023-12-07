@@ -15,11 +15,24 @@ import { AuthenticateService } from 'src/app/services/authenticate.service';
 export class HeaderComponent implements OnInit {
 
   isLoggedIn: boolean = false;
+  userRoles: string[] = [];
 
   constructor(private authService: AuthenticateService, private router: Router) {}
 
   ngOnInit() {
     this.isLoggedIn = this.authService.isAuthenticated();
+    const userId=this.authService.getCurrentUserId();
+    console.log("userid", userId);
+
+    this.authService.getUserRolesById(userId).subscribe(
+      (roles) => {
+        this.userRoles = roles;
+        console.log('Roles:', roles);
+      },
+      (error) => {
+        console.error('Error fetching user roles:', error);
+      }
+    );
   }
   logout() {
     this.authService.logout();

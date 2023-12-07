@@ -15,27 +15,29 @@
     <div class="row">
       <div class="col-md-4">
         <div class="car-wrap rounded ftco-animate">
-          <div class="img rounded d-flex align-items-end" style="background-image: url(assets/images/car-12.jpg);">
+          <div class="img rounded d-flex align-items-end" [style.background-image]="'url(' + getImageUrl(reservation) + ')'">
           </div>
-          <div class="text">
-            <h2 class="mb-0"><a href="car-single.html">Mercedes Grand Sedan</a></h2>
+          <div class="text text-center">
+            <h2 class="mb-0 "><a href="car-single.html">{{reservation.model}} - {{ reservation.name }}</a></h2>
           </div>
         </div>
       </div>
 
       <div class="col-md-8">
-        <h5 class="mb-0 interligne"><strong>Client Name :</strong> Rahma sassi</h5>
-        <h5 class="mb-0 interligne"><strong>Driving License :</strong> 52426226</h5>
-        <h5 class="mb-0 interligne"><strong>Phone Number :</strong> 24 234 234</h5>
-        <h5 class="mb-0 interligne"><strong>Booking Date :</strong> 12-12-2023 / 12-12-2023</h5>
-        <h5 class="mb-0 interligne"><strong>Total price :</strong> 123Dt</h5>
-        <div class="nav-item dropdown ">
-          <a href="" class=" dropdown-toggle" data-toggle="dropdown" style="color: #20c997;"><strong>processing ...</strong></a>
-          <div class="dropdown-menu rounded-0 m-0">
-              <a href="" class="dropdown-item">Confirmed</a>
-              <a href="" class="dropdown-item">Rejected</a>
-          </div>
-      </div>
+        <h4 class="mb-4"><strong>Client Name :</strong> {{reservation.username}}</h4>
+        <h4 class="mb-4"><strong>Address :</strong> {{reservation.address}}</h4>
+        <h4 class="mb-4"><strong>Phone Number :</strong> {{reservation.phone}}</h4>
+        <h4 class="mb-4"><strong>Booking Date :</strong> {{reservation.dateDebut | date:'dd-MM-YYYY'}} / {{reservation.dateFin | date:'dd-MM-YYYY'}}</h4>
+        <h4 class="mb-4"><strong>Total price :</strong> {{reservation.priceTt}}Dt</h4>
+        <div class="form-group">
+          <label for="statusDropdown"><strong>Reservation Status:</strong></label>
+          <select class="form-control" id="statusDropdown" [(ngModel)]="reservation.status" (ngModelChange)="updateStatus()">
+            <option value="pending">Pending</option>
+            <option value="rejected">Rejected</option>
+            <option value="accepted">Accepted</option>
+          </select>
+        </div>
+
       </div>
     </div>
   </div>

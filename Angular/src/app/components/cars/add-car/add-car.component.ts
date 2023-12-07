@@ -38,7 +38,7 @@ export class AddCarComponent {
     (response) => {
       console.log('Réponse du backend :', response);
       if (response.id) {
-        this.router.navigate(['/list-voiture-user']);
+        this.router.navigate(['/list-voiture-agence']);
       }
       console.log('ID de l\'utilisateur actuel :', currentUserId);
     },

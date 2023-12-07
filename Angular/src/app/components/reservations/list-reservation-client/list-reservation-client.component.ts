@@ -3,6 +3,7 @@ import { CarReservationClient } from '../../../Models/list-reservation-client.mo
 import { Reservation } from 'src/app/Models/reservation';
 import { ReservationService } from 'src/app/services/reservation.service';
 import { AuthenticateService } from 'src/app/services/authenticate.service';
+import { ReservationCarAgencyDTO } from 'src/app/Models/reservation-car-agency-dto.model';
 
 @Component({
   selector: 'app-list-reservation-client',
@@ -11,7 +12,7 @@ import { AuthenticateService } from 'src/app/services/authenticate.service';
 })
 export class ListReservationClientComponent implements OnInit {
 
-  reservations: Reservation[] = [];
+  reservations: ReservationCarAgencyDTO[] = [];
 
   constructor(private reservationService: ReservationService, private authService: AuthenticateService) {}
 

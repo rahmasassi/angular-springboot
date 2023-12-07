@@ -1,23 +1,26 @@
 package com.mycompany.rentCar.Controllers;
 
+import com.mycompany.rentCar.CarDTO.ReservationCarAgencyDTO;
+import com.mycompany.rentCar.CarDTO.ReservationCarUserDTO;
 import com.mycompany.rentCar.CarDTO.ReservationDTO;
+import com.mycompany.rentCar.Entities.Agency;
 import com.mycompany.rentCar.Entities.Cars;
+import com.mycompany.rentCar.Entities.Image;
 import com.mycompany.rentCar.Entities.Reservation;
 import com.mycompany.rentCar.Repositories.CarsRepository;
 import com.mycompany.rentCar.Repositories.ReservationRepository;
 import com.mycompany.rentCar.Services.CarsService;
 import com.mycompany.rentCar.Services.ReservationService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.DataAccessException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.server.ResponseStatusException;
 
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @CrossOrigin(origins = "http://localhost:4200")
 @RestController
@@ -50,11 +53,13 @@ public class ReservationController {
     }
 
     @GetMapping("/reservations/{agencyId}")
-    public ResponseEntity<List<Reservation>> getReservationByAgencyId (@PathVariable long agencyId) {
+    public ResponseEntity<List<ReservationCarUserDTO>> getReservationByAgencyId (@PathVariable long agencyId) {
+
+        System.out.println("Request received for agency ID: " + agencyId);
 
         List<Reservation> reservations = reservationService.getAllReservation();
         List<Cars> cars = reservationService.getReservationByAgency(agencyId);
-        List<Reservation> matchingReservations = new ArrayList<>();
+        List<ReservationCarUserDTO> matchingReservations = new ArrayList<>();
 
         for (Reservation reservation : reservations) {
             if (reservation.getCar() != null) {
@@ -62,12 +67,28 @@ public class ReservationController {
 
                 for (Cars car : cars) {
                     if (car.getId() == carIdInReservation) {
-                        matchingReservations.add(reservation);
+                        Image image = car.getImage();
+                        ReservationCarUserDTO dto = new ReservationCarUserDTO(
+                                reservation.getId(),
+                                reservation.getDateDebut(),
+                                reservation.getDateFin(),
+                                reservation.getUser().getUsername(),
+                                reservation.getCar().getModel(),
+                                reservation.getStatus(),
+                                reservation.getPriceTt(),
+                                reservation.getPhone(),
+                                reservation.getAddress(),
+                                reservation.getCar().getName(),
+                                (image != null) ? image.getId() : 0,
+                                (image != null) ? image.getFileName() : null,
+                                (image != null) ? image.getFileType() : null,
+                                (image != null) ? image.getData() : null
+                        );
+                        matchingReservations.add(dto);
                     }
                 }
             }
         }
-
         return ResponseEntity.ok(matchingReservations);
     }
 
@@ -88,8 +109,36 @@ public class ReservationController {
     }
 
     @GetMapping("/getReservationsByUserId/{user_id}")
-    public ResponseEntity<List<ReservationDTO>> getReservationsByUserId(@PathVariable long user_id) {
-        List<ReservationDTO> reservationDTOs = reservationService.getReservationByUserId(user_id);
+    public ResponseEntity<List<ReservationCarAgencyDTO>> getReservationsByUserId(@PathVariable long user_id) {
+        List<ReservationCarAgencyDTO> reservationDTOs = reservationService.getReservationByUserId(user_id);
         return new ResponseEntity<>(reservationDTOs, HttpStatus.OK);
+    }
+
+    @PutMapping("/updateStatus/{reservationId}")
+    public ResponseEntity<String> updateReservation(@PathVariable Long reservationId, @RequestParam String newStatus) {
+        reservationService.updateReservation(reservationId, newStatus);
+        return ResponseEntity.ok("Reservation status updated successfully");
+    }
+
+    @GetMapping("/getReservationById/{reservationId}")
+    public ResponseEntity<ReservationCarUserDTO> getReservationById(@PathVariable Long reservationId) {
+        try {
+            Reservation reservation = reservationService.getReservationById(reservationId);
+            if (reservation != null) {
+                ReservationCarUserDTO reservationDTO = new ReservationCarUserDTO(reservation);
+                return ResponseEntity.ok(reservationDTO);
+            } else {
+                return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                        .body(null);
+            }
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body(null);
+        }
+    }
+
+    @GetMapping("/getAgencyById/{agencyId}")
+    public Optional<Agency> getAgencyById (@PathVariable Long agencyId) {
+        return reservationService.getAgencyById(agencyId);
     }
 }
