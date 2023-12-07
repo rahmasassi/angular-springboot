@@ -42,7 +42,7 @@ export class AddReclamationComponent {
         this.router.navigate(['/list-agence']);
       },
       (error) => {
-        console.error('Erreur lors de l\'envoi des données au backend :', error);
+        console.error('Erreur lors de l\'envoi des données auu backend :', error);
       }
     );
   }
