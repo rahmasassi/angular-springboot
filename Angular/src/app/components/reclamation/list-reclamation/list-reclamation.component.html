@@ -17,28 +17,26 @@
   <div class="container">
     <div class="row">
       <div class="col-md-12 ftco-animate">
-        <div class="car-list">
-          <table class="table">
-            <thead class="thead-primary">
-              <tr class="text-center">
-                <th class="bg-primary heading">Name</th>
-                <th class="bg-dark heading">Description</th>
-                <th class="bg-black heading">Actions</th>
-              </tr>
-            </thead>
-            <tbody>
-                <tr *ngFor="let reclamation of reclamations" class="align-middle">
-                   <td class="text-center">{{ reclamation.userId }}</td>
-                     <td class="text-center">{{ reclamation.description }}</td>
-                   <td class="text-center">
-                     <button mat-icon-button class="mat-button-custom" (click)="deleteReclamation(reclamation)">
-                        <mat-icon aria-label="Delete" style="color: red;">delete</mat-icon>
-                     </button>
-                   </td>
-                </tr>
-</tbody>
-          </table>
-        </div>
+        <table class="table">
+          <thead class="thead-primary">
+            <tr class="text-center">
+              <th class="bg-primary heading">Name</th>
+              <th class="bg-dark heading">Description</th>
+              <th class="bg-black heading">Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let reclamation of reclamations" class="align-middle">
+              <td class="text-center">{{ reclamation.userId }}</td>
+              <td class="text-center">{{ reclamation.description }}</td>
+              <td class="text-center">
+                <button mat-icon-button class="mat-button-custom" (click)="deleteReclamation(reclamation)">
+                  <mat-icon aria-label="Delete" style="color: red;">delete</mat-icon>
+                </button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
       </div>
     </div>
   </div>
